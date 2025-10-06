@@ -5,11 +5,16 @@ use App\Http\Controllers\GestionController;
 use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PostsController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\SocieteController;
 
-// Route principale
+/**
+ * Routes principales
+ * page index, categorie dashboard.
+ */
 Route::get('/', function () {
-    return view('welcome');
+    return view('header') . view('dashboard.index');
 });
 
 // Admin / Connexion
@@ -24,7 +29,7 @@ Route::get('/admin/finSession', [AccueilController::class, 'finSession'])->name(
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // ========================================
-// GESTION - Routes principales
+//                  GESTION
 // ========================================
 Route::prefix('gestion')->group(function () {
     // Page d'accueil gestion
@@ -52,15 +57,11 @@ Route::prefix('gestion')->group(function () {
 
     Route::get('/{entity}/create', [GestionController::class, 'create_form'])->name('gestion.create-form');
 
-    // LoadData (si vous l'implémentez plus tard)
-    Route::match(['get', 'post'], '/loadData/{segment}', [GestionController::class, 'loadData'])->name('gestion.load-data');
 
-    // Article form (si vous l'implémentez)
-    Route::post('/article_form', [GestionController::class, 'article_form'])->name('gestion.article-form');
 });
 
 // ========================================
-// UTILISATEURS
+//              UTILISATEURS
 // ========================================
 Route::prefix('utilisateurs')->group(function () {
     Route::get('/', [UsersController::class, 'index'])->name('utilisateurs.index');
@@ -75,9 +76,51 @@ Route::prefix('utilisateur')->group(function () {
 });
 
 // ========================================
-// SOCIÉTÉ
+//                  SOCIÉTÉ
 // ========================================
 Route::prefix('societe')->group(function () {
     Route::get('/', [SocieteController::class, 'index'])->name('societe.index');
     Route::get('/parametres', [SocieteController::class, 'parametre'])->name('societe.parametres');
+});
+
+// ========================================
+//                  CLIENT
+// ========================================
+Route::prefix('client')->group(function () {
+    Route::get('/', [ClientController::class, 'index'])->name('index');
+    Route::get('/list', [ClientController::class, 'list_clients'])->name('list');
+    Route::get('/list-v2', [ClientController::class, 'list_clients_v2'])->name('list_v2');
+    Route::get('/rappels', [ClientController::class, 'list_rappels'])->name('rappels');
+
+    // CRUD
+    Route::get('/create', [ClientController::class, 'create'])->name('create');
+    Route::get('/edit/{id?}', [ClientController::class, 'edit_client'])->name('edit');
+    Route::post('/update', [ClientController::class, 'update_client'])->name('update');
+    Route::delete('/{id}', [ClientController::class, 'destroy'])->name('destroy');
+
+    // Recherche AJAX
+    Route::get('/rechercher', [ClientController::class, 'rechercherClient'])->name('search');
+
+    // Documents
+    Route::get('/facture', [ClientController::class, 'facture'])->name('facture');
+    Route::get('/livraison', [ClientController::class, 'livraison'])->name('livraison');
+    Route::get('/devis', [ClientController::class, 'indexDevis'])->name('devis');
+    Route::get('/cdc', [ClientController::class, 'cdc_form'])->name('cdc');
+    Route::get('/generate-pdf', [ClientController::class, 'generate'])->name('generate_pdf');
+});
+
+// ========================================
+//                  posts
+// ========================================
+/**
+ * ->middleware(['auth']) -> AFFICHER LA ROUTE PAR RAPPORT AU ROLE DE L'UTILISATEUR.
+ * Si il est admin, lui autoriser l'accès, sinon lui refuser et le renvoyer sur la page d'accueil Dashboard.index
+ */
+Route::prefix('posts')->name('posts.')->group(function () {
+
+        Route::get('/', [PostsController::class, 'index'])->name('index');
+        Route::get('/create', [PostsController::class, 'create'])->name('create');
+        Route::get('/edit/{id}', [PostsController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [PostsController::class, 'update'])->name('update');
+        Route::delete('/{id}', [PostsController::class, 'destroy'])->name('destroy');
 });

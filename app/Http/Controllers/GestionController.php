@@ -247,23 +247,30 @@ class GestionController extends AdminController
         return view('gestion.list_fournisseurs', $data);
     }
 
-    public function list_clients()
-    {
-        $data = [
-            'clients' => Client::paginate(10),
-            'champs' => $this->clientModel->getColumnNames(),
-            'sessionData' => $this->sessionData
-        ];
 
-        return view('gestion.list_clients', $data);
-    }
+    /** LIST_CLIENT supprimée de Gestion,
+     * Création de la catégorie clients dans le controller clientController
+     *
+     */
+
+//    public function list_clients()
+//    {
+//        $data = [
+//            'clients' => Client::paginate(10),
+//            'champs' => $this->clientModel->getColumnNames(),
+//            'sessionData' => $this->sessionData
+//        ];
+//
+//        return view('gestion.list_clients', $data);
+//    }
 
     public function mouvements()
     {
         $data = [
-            'mouvement_stock' => MouvementsModels::paginate(10),
+            'mouvements' => MouvementsModels::paginate(10),
             'champs' => $this->mouvementModel->getColumnNames(),
-            'sessionData' => $this->sessionData
+            'sessionData' => $this->sessionData,
+            'pager' => $this->mouvementModel->pager,
         ];
 
         return view('gestion.list_mouvements', $data);

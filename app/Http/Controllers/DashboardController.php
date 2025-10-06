@@ -47,6 +47,7 @@ class DashboardController extends AdminController
         ];
 
         return view('header', $data)
-            . view('dashboard.index', $data);
+            . view('dashboard.index', $data)
+            . view('dashboard.sidebar', $data);
     }
 }

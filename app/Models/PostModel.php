@@ -2,42 +2,74 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PostModel extends Model
 {
+    use HasFactory;
+
+    // ✅ Même chose
     protected $table = 'posts';
-    protected $primaryKey = 'id';
-    protected $allowedFields = ['title', 'slug', 'content', 'author_id'];
-    protected $useTimestamps = true;
-    
-    public function getPosts()
+
+    // ✅ Laravel utilise 'id' par défaut, pas besoin de le spécifier
+    // protected $primaryKey = 'id';
+
+    // ⚠️ DIFFÉRENT : Laravel utilise $fillable au lieu de $allowedFields
+    protected $fillable = [
+        'title',
+        'slug',
+        'content',
+        'author_id'  // ou 'user_id' selon votre convention
+    ];
+
+    // ✅ Même chose - Laravel utilise aussi $timestamps (true par défaut)
+    // public $timestamps = true;
+
+    /**
+     * Relation avec l'utilisateur/auteur
+     */
+    public function author()
     {
-        return $this->findAll();
+        return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function getPost($id)
+    /**
+     * ❌ INUTILE en Laravel - déjà disponible avec Post::all()
+     * public function getPosts() { return $this->findAll(); }
+     */
+
+    /**
+     * ❌ INUTILE - déjà disponible avec Post::find($id)
+     * public function getPost($id) { return $this->find($id); }
+     */
+
+    /**
+     * ❌ INUTILE - déjà disponible avec Post::create($data)
+     * public function createPost($data) { return $this->insert($data); }
+     */
+
+    /**
+     * ❌ INUTILE - déjà disponible avec $post->update($data)
+     * public function updatePost($id, $data) { return $this->update($id, $data); }
+     */
+
+    /**
+     * ❌ INUTILE - déjà disponible avec $post->delete()
+     * public function deletePost($id) { return $this->delete($id); }
+     */
+
+    /**
+     * ✅ REMPLACER la requête SQL brute par un scope ou une méthode statique
+     */
+    public static function findBySlug($slug)
     {
-        return $this->find($id);
+        return static::where('slug', $slug)->first();
     }
 
-    public function createPost($data)
+    // Ou en tant que scope (préférable)
+    public function scopeBySlug($query, $slug)
     {
-        return $this->insert($data);
-    }
-
-    public function updatePost($id, $data)
-    {
-        return $this->update($id, $data);
-    }
-
-    public function deletePost($id)
-    {
-        return $this->delete($id);
-    }
-    public function getSlug($slug)
-    {
-        $db = db_connect();
-        return $db->query("SELECT * FROM posts WHERE slug='".$db->escapeString($slug)."'");
+        return $query->where('slug', $slug);
     }
 }
