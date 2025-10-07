@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Societe;
+use App\Models\SocieteModel as Societe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
@@ -102,6 +102,7 @@ class SocieteController extends AdminController
         ];
 
         return view('header', $data)
-            . view('societe.parametres', $data);
+            . view('societe.parametres', $data)
+            . view('societe.sidebar', $data);
     }
 }

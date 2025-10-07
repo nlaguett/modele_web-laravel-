@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StatistiquesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GestionController;
 use App\Http\Controllers\AccueilController;
@@ -124,4 +125,15 @@ Route::prefix('posts')->name('posts.')->group(function () {
         Route::get('/edit/{id}', [PostsController::class, 'edit'])->name('edit');
         Route::put('/{id}', [PostsController::class, 'update'])->name('update');
         Route::delete('/{id}', [PostsController::class, 'destroy'])->name('destroy');
+});
+
+// ========================================
+//              Statistiques
+// ========================================
+/**
+ *
+ *
+ */
+Route::prefix('statistiques')->name('Statistiques.')->group(function () {
+    Route::get('/', [StatistiquesController::class, 'index'])->name('index');
 });
