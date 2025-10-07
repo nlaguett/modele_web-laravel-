@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
  * Aucun droit d'accès pour les utilisateurs non connectés.
  * Routes pour les utilisateurs sans accès au modifications etc...
  */
-Route::middleware('auth')->group(function () {
+Route::middleware('auth' , 'session.timeout')->group(function () {
         Route::get('/', function () {
             return view('header') . view('dashboard.index');
         });
