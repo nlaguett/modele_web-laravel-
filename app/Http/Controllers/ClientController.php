@@ -10,7 +10,7 @@ use Carbon\Carbon;
 //use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 
-class ClientController extends AdminController
+class ClientController extends Controller
 {
     protected $sessionData;
     protected $Client;

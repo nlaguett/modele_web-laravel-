@@ -14,7 +14,7 @@ use App\Models\ClientsModels as Client;;
 use App\Models\EmplacementsModels as Emplacement;
 use App\Models\MouvementsModels;
 
-class GestionController extends AdminController
+class GestionController extends Controller
 {
     public $sessionData;
     protected $articleModel;

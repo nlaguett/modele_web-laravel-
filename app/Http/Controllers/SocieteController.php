@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
-class SocieteController extends AdminController
+class SocieteController extends Controller
 {
     public $sessionData;
     protected $societeModel;

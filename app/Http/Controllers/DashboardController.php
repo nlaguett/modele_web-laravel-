@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
-class DashboardController extends AdminController
+class DashboardController extends Controller
 {
     public $sessionData;
 

@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 
-class UsersModel extends Model
+class UsersModel extends Authenticatable
 {
     protected $table = 'utilisateur';
     protected $primaryKey = 'IDUtilisateur';

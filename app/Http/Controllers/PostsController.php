@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
-class PostsController extends AdminController
+class PostsController extends Controller
 {
     /**
      * Constructeur - applique le middleware auth
