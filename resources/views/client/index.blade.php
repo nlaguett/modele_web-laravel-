@@ -7,27 +7,27 @@
 
             <div class="dashboard-container">
                 <div class="customer-card bg-card-gestion" data-type="ca-jour">
-                    <div class="card-amount">{{ number_format($caJour ?? 2223500, 2, ',', ' ') }} €</div>
+                    <div class="card-amount"> €</div>
                     <div class="card-text">Chiffre d'affaire du jour</div><br>
                     <button class="btn-details" style="font-size:18px;">Détails</button>
                 </div>
                 <div class="customer-card bg-card-gestion" data-type="devis">
-                    <div class="card-amount">{{ $devisCount ?? 22 }}</div>
+                    <div class="card-amount"></div>
                     <div class="card-text">Devis</div><br>
                     <button class="btn-details" style="font-size:18px;">Détails</button>
                 </div>
                 <div class="customer-card bg-card-gestion" data-type="commandes">
-                    <div class="card-amount">{{ $commandesCount ?? 150 }}</div>
+                    <div class="card-amount"></div>
                     <div class="card-text">Commandes</div><br>
                     <button class="btn-details" style="font-size:18px;">Détails</button>
                 </div>
                 <div class="customer-card bg-card-gestion" data-type="factures">
-                    <div class="card-amount">{{ $facturesCount ?? 230 }}</div>
+                    <div class="card-amount"></div>
                     <div class="card-text">Factures</div><br>
                     <button class="btn-details" style="font-size:18px;">Détails</button>
                 </div>
                 <div class="customer-card bg-card-gestion" data-type="rappels">
-                    <div class="card-amount">{{ $rappelsCount ?? 25 }}</div>
+                    <div class="card-amount"></div>
                     <div class="card-text">Rappels en attente</div><br>
                     <button class="btn-details" style="font-size:18px;">Détails</button>
                 </div>

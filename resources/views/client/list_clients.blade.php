@@ -1,135 +1,249 @@
-<div class="container">
-    <div class="body-dashboard-container">
-        <div class="dashboard-container-client">
-            <h1>Liste des Clients</h1>
-            <div class="button-container">
-                <div class="background-table">
-                    {{-- En-tête du tableau --}}
-                    <div class="client-card header">
-                        <div class="icon"></div>
-                        <div class="info">
-                            <div class="info-line">
-                                <div class="line">
-                                    <span class="name"><strong>Nom Prénom</strong></span>
-                                    <span class="company"><strong>Société</strong></span>
-                                </div>
-                                <div class="line">
-                                    <span class="email"><strong>Email<br>Téléphone</strong></span>
-                                    <span class="city"><strong>Code Postal<br>Ville</strong></span>
-                                </div>
-                            </div>
+
+
+<div class="container_vignette">
+    <div class="header_vignette">
+        <h1 class="theme-clients">Gestion des Clients</h1>
+        <p>Gérez vos relations clients et prospects efficacement</p>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-number" style="color: var(--primary);">156</div>
+            <div class="stat-label">Clients Total</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" style="color: var(--success);">142</div>
+            <div class="stat-label">Clients Actifs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" style="color: var(--warning);">34</div>
+            <div class="stat-label">Prospects</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" style="color: var(--info);">23</div>
+            <div class="stat-label">Nouveaux ce mois</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="search-container">
+            <i class="search-icon" data-lucide="search"></i>
+            <input type="text" class="search-input" placeholder="Rechercher par nom, email ou ville..." id="searchInput">
+        </div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary btn-sm">
+                <i data-lucide="filter"></i>
+                Filtrer
+            </button>
+            <button class="btn btn-secondary btn-sm">
+                <i data-lucide="download"></i>
+                Exporter
+            </button>
+{{--            <button type="button" class="btn btn-add" data-url="{{ route('clients.create') }}">--}}
+{{--                <i data-lucide="plus"></i>--}}
+{{--                Nouveau Client--}}
+{{--            </button> <button type="button" class="btn btn-add" data-url="{{ route('clients.create') }}">--}}
+{{--                <i data-lucide="plus"></i>--}}
+{{--                Nouveau Client--}}
+{{--            </button>--}}
+        </div>
+    </div>
+
+    <div class="items-grid" id="itemsGrid">
+        @forelse($clients as $client)
+            <div class="item-card theme-clients">
+                <div class="item-header">
+                    <div>
+                        <div class="item-title">
+                            {{ $client->nom }} {{ $client->prenom }}
                         </div>
-                        Action
+                        <div class="item-reference">
+                            {{ $client->nom_societe ?: 'Client particulier' }}
+                        </div>
                     </div>
+                    <div class="status-badge status-active">Client</div>
+                </div>
 
-                    {{-- Liste des clients --}}
-                    @forelse($clients as $client)
-                        <div class="client-card">
-                            <div class="icon"></div>
-                            <div class="info">
-                                <div class="info-line">
-                                    <div class="line">
-                                        <span class="name">{{ $client->nom }} {{ $client->prenom }}</span>
-                                        <span class="company">{{ $client->nom_societe }}</span>
-                                    </div>
-                                    <div class="line">
-                                        <span class="email">
-                                            {{ $client->email }}<br>{{ $client->telephone }}
-                                        </span>
-                                        <span class="city">
-                                            {{ $client->code_postal }} {{ $client->ville }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{{ route('client.edit', $client->IDclient) }}" class="ajax-link">
-                                <div class="menu"></div>
-                            </a>
-                        </div>
-                    @empty
-                        <div class="no-clients">
-                            <p>Aucun client trouvé</p>
-                        </div>
-                    @endforelse
-
-                    {{-- Footer avec pagination --}}
-                    <div class="footer_list">
-                        <div class="pagination-container">
-                            {{ $clients->links() }}
-                        </div>
-                        <button type="button" class="btn btn-add" data-url="{{ route('client.edit', 0) }}">
-                            Ajouter
-                        </button>
+                <div class="contact-section">
+                    <div class="contact-item">
+                        <i data-lucide="mail" class="contact-icon"></i>
+                        <span>{{ $client->email }}</span>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="phone" class="contact-icon"></i>
+                        <span>{{ $client->telephone }}</span>
                     </div>
                 </div>
+
+                <div class="address-section">
+                    <i data-lucide="map-pin" class="address-icon"></i>
+                    <div class="address-content">
+                        <div>{{ $client->adresse }}</div>
+                        <div>{{ $client->code_postal }} {{ $client->ville }}</div>
+                        @if($client->pays)
+                            <div>{{ $client->pays }}</div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="item-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Type</div>
+                        <div class="detail-value value-client-type">
+                            {{ $client->nom_societe ? 'Professionnel' : 'Particulier' }}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Localisation</div>
+                        <div class="detail-value value-location">
+                            {{ $client->ville }}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Statut</div>
+                        <div class="detail-value status-text">
+                            <span class="status-indicator active"></span>
+                            Actif
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Contact</div>
+                        <div class="detail-value value-contact">
+                            Email + Tel
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-actions">
+                    <button class="btn btn-outline btn-sm">
+                        <i data-lucide="eye"></i>
+                        Voir Détails
+                    </button>
+{{--                    <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-outline btn-sm ajax-link">--}}
+{{--                        <i data-lucide="edit"></i>--}}
+{{--                        <img src='{{ asset('images/modifier.png') }}' style='height:20px;'>--}}
+{{--                        Modifier--}}
+{{--                    </a>--}}
+                    <button class="btn btn-outline btn-sm">
+                        <i data-lucide="file-text"></i>
+                        Commandes
+                    </button>
+                </div>
             </div>
-        </div>
+        @empty
+            <div class="no-data">
+                <p>Aucun client trouvé</p>
+            </div>
+        @endforelse
+    </div>
+</div>
+
+<!-- FOOTER / PAGINATION -->
+<div class="footer_list">
+    <div class="pagination-container">
+        {{ $clients->links() }}
     </div>
 </div>
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
+        // Initialize Lucide icons
+        lucide.createIcons();
 
-            // Fonction pour charger les données via AJAX
-            function loadTable(type, page) {
-                console.log("load table " + type + " " + page);
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const itemsGrid = document.getElementById('itemsGrid');
+        const items = Array.from(itemsGrid.children);
 
-                $.ajax({
-                    url: "{{ route('client.loadData') }}",
-                    type: "POST",
-                    data: {
-                        type: type,
-                        page: page,
-                        _token: "{{ csrf_token() }}"
-                    },
-                    dataType: "json",
-                    success: function (data) {
-                        if (typeof updateTable === 'function') {
-                            updateTable(data.items, data.headers);
-                        }
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
 
-                        if (document.getElementById("page-input")) {
-                            document.getElementById("page-input").value = page;
-                        }
+            items.forEach(item => {
+                const title = item.querySelector('.item-title');
+                const contact = item.querySelector('.contact-section');
+                const address = item.querySelector('.address-content');
 
-                        if (document.getElementById("current-page-display")) {
-                            document.getElementById("current-page-display").textContent = page;
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Erreur AJAX:", error);
-                        alert("Erreur lors du chargement des données.");
-                    }
-                });
-            }
+                if (title && contact && address) {
+                    const titleText = title.textContent.toLowerCase();
+                    const contactText = contact.textContent.toLowerCase();
+                    const addressText = address.textContent.toLowerCase();
 
-            // Fonction pour changer de page
-            function changePage(page) {
-                const totalPages = {{ $clients->lastPage() }};
-                console.log("changepage " + page + " " + totalPages);
+                    const matches = titleText.includes(searchTerm) ||
+                        contactText.includes(searchTerm) ||
+                        addressText.includes(searchTerm);
 
-                if (page < 1 || page > totalPages) return;
+                    item.style.display = matches ? 'block' : 'none';
+                }
+            });
+        });
 
-                loadTable("clients", page);
-            }
-
-            // Gestion du clic sur le bouton "Ajouter"
-            $('.btn-add').click(function(e) {
-                e.preventDefault();
-                const url = $(this).data('url');
-                window.location.href = url;
+        // Add hover animations
+        document.querySelectorAll('.item-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
             });
 
-            // Gestion des liens AJAX
-            $('.ajax-link').click(function(e) {
-                e.preventDefault();
-                const url = $(this).attr('href');
-                window.location.href = url;
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
             });
+        });
 
-            // Charger la première page au démarrage (optionnel)
-            // loadTable("clients", 1);
+        // Simulate loading animation
+        function showLoading() {
+            itemsGrid.innerHTML = '<div class="loading"><i data-lucide="loader-2" style="animation: spin 1s linear infinite; margin-right: 0.5rem;"></i>Chargement des clients...</div>';
+            lucide.createIcons();
+        }
+
+        // Button interactions with ripple effect
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.cssText = `
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+            `;
+
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Legacy AJAX functions for backward compatibility
+        function loadTable(type, page) {
+            console.log("load table " + type + " " + page);
+            showLoading();
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
+
+        function changePage(page) {
+            console.log("changePage " + page);
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('page', page);
+            window.location.href = currentUrl.toString();
+        }
+
+        // Initialisation
+        $(document).ready(function() {
+            console.log("Page clients chargée avec le nouveau design");
         });
     </script>
 @endpush

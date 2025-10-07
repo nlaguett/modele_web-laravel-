@@ -101,8 +101,8 @@ class ClientController extends AdminController
      */
     public function list_rappels()
     {
-        $rappels = Rappel::with('client')->paginate(10);
-        return view('client.list_rappels', compact('rappels'));
+        $data['activepage'] = 'rappels';;
+        return view('client.list_rappels', $data);
     }
 
     /**
@@ -285,5 +285,9 @@ class ClientController extends AdminController
     public function cdc_form()
     {
         return view('client.cdc');
+    }
+    public function commande()
+    {
+        return view('client.commande');
     }
 }

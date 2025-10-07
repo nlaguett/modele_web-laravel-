@@ -2,64 +2,35 @@
 
 namespace App\Models;
 
-use CodeIgniter\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
-class RappelsModels extends Model {
+class RappelsModels extends Model
+{
+    use HasFactory;
 
-    protected $table      = 'rappel';
+    protected $table = 'rappel';
+
     protected $primaryKey = 'IDrappel';
 
-    protected $allowedFields = [ 'IDrappel','IDutilisateur','NumClient','DateRappel','HeureRappel','DetailsRappel','bOuvert'    ];
+    protected $fillable = [
+        'IDrappel',
+        'IDutilisateur',
+        'NumClient',
+        'DateRappel',
+        'HeureRappel',
+        'DetailsRappel',
+        'bOuvert'
+    ];
 
-    protected $useTimestamps = false;
-    protected $createdField  = 'date_creation';
-    protected $updatedField  = 'date_modif';
-    
-    public function getColumnNames() {
-        $db = \Config\Database::connect();
-        $query = $db->query("SHOW COLUMNS FROM " . $this->table);
-        $columns = $query->getResultArray();
+    public $timestamps = false;
 
-        $columnNames = [];
-        foreach ($columns as $column) {
-            $columnNames[] = $column['Field'];
-        }
-        return $columnNames;
+    /**
+     * Obtenir les noms des colonnes de la table
+     */
+    public static function getColumnNames()
+    {
+        return Schema::getColumnListing((new static)->getTable());
     }
- 
 }
-    /*
-CREATE TABLE `rappel` (
-  `IDrappel` int(11) NOT NULL,
-  `IDutilisateur` int(11) NOT NULL,
-  `NumClient` int(11) NOT NULL,
-  `DateRappel` date NOT NULL,
-  `HeureRappel` time NOT NULL,
-  `DetailsRappel` text NOT NULL,
-  `bOuvert` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `rappel`
---
-ALTER TABLE `rappel`
-  ADD PRIMARY KEY (`IDrappel`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `rappel`
---
-ALTER TABLE `rappel`
-  MODIFY `IDrappel` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-
-    */
- 

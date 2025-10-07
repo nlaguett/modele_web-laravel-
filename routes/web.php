@@ -88,7 +88,6 @@ Route::prefix('societe')->group(function () {
 // ========================================
 Route::prefix('client')->group(function () {
     Route::get('/', [ClientController::class, 'index'])->name('index');
-    Route::get('/list', [ClientController::class, 'list_clients'])->name('list');
     Route::get('/list-v2', [ClientController::class, 'list_clients_v2'])->name('list_v2');
     Route::get('/rappels', [ClientController::class, 'list_rappels'])->name('rappels');
 
@@ -101,9 +100,11 @@ Route::prefix('client')->group(function () {
     // Recherche AJAX
     Route::get('/rechercher', [ClientController::class, 'rechercherClient'])->name('search');
 
-    // Documents
-    Route::get('/facture', [ClientController::class, 'facture'])->name('facture');
-    Route::get('/livraison', [ClientController::class, 'livraison'])->name('livraison');
+    // Listes
+    Route::get('client', [ClientController::class, 'list_clients'])->name('client');
+    Route::get('/factures', [ClientController::class, 'facture'])->name('facture');
+    Route::get('/commandes', [ClientController::class, 'commande'])->name('commande');
+    Route::get('/livraisons', [ClientController::class, 'livraison'])->name('livraison');
     Route::get('/devis', [ClientController::class, 'indexDevis'])->name('devis');
     Route::get('/cdc', [ClientController::class, 'cdc_form'])->name('cdc');
     Route::get('/generate-pdf', [ClientController::class, 'generate'])->name('generate_pdf');
