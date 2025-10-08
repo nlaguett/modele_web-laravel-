@@ -25,27 +25,16 @@
             </div>
         </div>
 
-        <div class="search-container-wrapper">
-            <div class="search-input-group">
-                <input type="text" class="search-input" id="searchMouvements"
-                       placeholder="Rechercher un mouvement..." autocomplete="off">
-                <button type="button" onclick="clearSearchFilter()" class="clear-search-btn"
-                        id="clearSearchBtn" style="display: none;">
-                    <i data-lucide="x"></i>
-                </button>
-                <button class="btn btn-secondary btn-sm">
-                    <i data-lucide="filter"></i>
-                    Filtrer
-                </button>
-                <button class="btn btn-secondary btn-sm">
-                    <i data-lucide="download"></i>
-                    Exporter
-                </button>
-                <a href="{{ route('gestion.create', ['type' => 'mouvements']) }}" class="btn btn-primary btn-sm">
-                    ➕ Nouveau mouvement
-                </a>
-            </div>
-        </div>
+
+
+        <x-searchbar
+            search-id="searchMouvements"
+            target-grid="itemsGrid"
+            placeholder="Rechercher un mouvement..."
+            create-route="{{ route('gestion.create', ['type' => 'mouvements']) }}"
+            create-label="Nouveeau mouvement"
+            item-label="mouvements"
+        />
 
         <div id="resultatsMouvements" class="resultatsClient"></div>
 
