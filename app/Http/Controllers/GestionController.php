@@ -398,8 +398,9 @@ class GestionController extends Controller
         // Créer l'enregistrement
         $model->insert($validated);
 
-        return redirect()->route('gestion.list_' . $type)
-            ->with('success', 'Élément créé avec succès !');
+        return redirect()->route('gestion.index')
+            ->with('success', 'Élément modifié avec succès !')
+            ->with('loadSection', 'articles');
     }
 
     public function edit($type, $id)
@@ -438,7 +439,7 @@ class GestionController extends Controller
         // Mettre à jour l'enregistrement
         $model->where($primaryKey, $id)->update($validated);
 
-        return redirect()->route('gestion.list_' . $type)
+        return redirect()->route('gestion.AM_' . $type)
             ->with('success', 'Élément modifié avec succès !');
     }
 

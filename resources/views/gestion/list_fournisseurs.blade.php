@@ -24,28 +24,25 @@
             </div>
         </div>
 
-        <div class="search-container-wrapper">
-            <div class="search-input-group">
-                <input type="text" class="search-input" id="searchFournisseurs"
-                       placeholder="Rechercher un fournisseur..." autocomplete="off">
-                <button type="button" onclick="clearSearchFilter()" class="clear-search-btn"
-                        id="clearSearchBtn" style="display: none;">
-                    <i data-lucide="x"></i>
-                </button>
-                <button class="btn btn-secondary btn-sm">
-                    <i data-lucide="filter"></i>
-                    Filtrer
-                </button>
-                <button class="btn btn-secondary btn-sm">
-                    <i data-lucide="download"></i>
-                    Exporter
-                </button>
 
-                <a href="{{ route('gestion.create', ['type' => 'fournisseurs']) }}" class="btn btn-primary btn-sm">
-                    ➕ Nouveau fournisseur
-                </a>
-            </div>
-        </div>
+
+        <x-searchbar
+            search-id="searchFournisseurs"
+            target-grid="itemsGrid"
+            item-selector=".item-card"
+            placeholder="Rechercher un fournisseur..."
+            create-route="{{ route('gestion.create', ['type' => 'fournisseurs']) }}"
+            create-label="Nouveau fournisseur"
+            item-label="fournisseurs"
+            :search-fields="[
+        '.item-title',              // Nom complet (Civilité + Nom + Prénom)
+        '.item-subtitle',           // SIRET ou Particulier
+        '.contact-item span',       // Email, Téléphone, Mobile
+        '.address-content',         // Adresse complète
+        '.detail-value',            // Contact commercial, conditions, incoterm
+        '.observations-content'     // Observations
+    ]"
+        />
 
         <div id="resultatsFournisseurs" class="resultatsClient"></div>
 

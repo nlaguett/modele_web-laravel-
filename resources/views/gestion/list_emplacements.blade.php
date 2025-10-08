@@ -24,30 +24,24 @@
         </div>
     </div>
 
-    <div class="search-container-wrapper">
-        <div class="search-input-group">
-            <input type="text" class="search-input" id="searchEmplacements"
-                   placeholder="Rechercher un article..." autocomplete="off">
-            <button type="button" onclick="clearSearchFilter()" class="clear-search-btn"
-                    id="clearSearchBtn" style="display: none;">
-                <i data-lucide="x"></i>
-            </button>
-            <button class="btn btn-secondary btn-sm">
-                <i data-lucide="filter"></i>
-                Filtrer
-            </button>
-            <button class="btn btn-secondary btn-sm">
-                <i data-lucide="download"></i>
-                Exporter
-            </button>
-            <a href="{{ route('gestion.create', ['type' => 'emplacements']) }}" class="btn btn-primary btn-sm">
-                ➕ Nouvel emplacement
-            </a>
-        </div>
-    </div>
+
+
+    <x-searchbar
+        search-id="searchEmplacements"
+        target-grid="emplacementsGrid"
+        placeholder="Rechercher un emplacement..."
+        item-label="emplacements"
+        create-route="{{ route('gestion.create', ['type' => 'emplacements']) }}"
+        create-label="Nouvel article"
+        :search-fields="[
+        '.item-title',
+        '.item-code',
+        '.item-description'
+    ]"
+    />
     <div id="resultatsEmplacements" class="resultatsClient"></div>
 
-    <div class="items-grid" id="itemsGrid">
+    <div class="items-grid" id="emplacementsGrid">
         <!-- Emplacement -->
         @foreach($emplacements as $emplacement)
             <div class="item-card theme-articles">

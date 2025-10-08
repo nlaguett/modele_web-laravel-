@@ -6,7 +6,15 @@
 </head>
 <body>
 
+<div class="main-content">
 <div class="container_vignette">
+
+    <!-- Header -->
+    <div class="header_vignette">
+        <h1>{{ $item ? 'Modifier' : 'Nouvel' }} Emplacement</h1>
+        <p>{{ $item ? 'Modifiez les informations de l\'emplacement' : 'Créez un nouvel emplacement de stockage' }}</p>
+    </div>
+
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="{{ route('gestion.AM_emplacements') }}">
@@ -15,12 +23,6 @@
         <a href="{{ route('gestion.AM_emplacements') }}">Gestion des Emplacements</a>
         <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
         <span>{{ $item ? 'Modifier' : 'Nouvel' }} Emplacement</span>
-    </div>
-
-    <!-- Header -->
-    <div class="header_vignette">
-        <h1>{{ $item ? 'Modifier' : 'Nouvel' }} Emplacement</h1>
-        <p>{{ $item ? 'Modifiez les informations de l\'emplacement' : 'Créez un nouvel emplacement de stockage' }}</p>
     </div>
 
     <!-- Form Container -->
@@ -134,7 +136,7 @@
         </form>
     </div>
 </div>
-
+</div>
 <script>
     // Initialize Lucide icons
     lucide.createIcons();

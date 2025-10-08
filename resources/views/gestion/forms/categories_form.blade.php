@@ -6,7 +6,17 @@
 </head>
 <body>
 
+
+<div class="main-content">
 <div class="container_vignette">
+
+
+    <!-- Header -->
+    <div class="header_vignette">
+        <h1>{{ $item ? 'Modifier' : 'Nouvelle' }} Catégorie</h1>
+        <p>{{ $item ? 'Modifiez les informations de la catégorie' : 'Créez une nouvelle catégorie d\'articles' }}</p>
+    </div>
+
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="{{ route('gestion.AM_categories') }}">
@@ -15,12 +25,6 @@
         <a href="{{ route('gestion.AM_categories') }}">Gestion des Catégories</a>
         <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
         <span>{{ $item ? 'Modifier' : 'Nouvelle' }} Catégorie</span>
-    </div>
-
-    <!-- Header -->
-    <div class="header_vignette">
-        <h1>{{ $item ? 'Modifier' : 'Nouvelle' }} Catégorie</h1>
-        <p>{{ $item ? 'Modifiez les informations de la catégorie' : 'Créez une nouvelle catégorie d\'articles' }}</p>
     </div>
 
     <!-- Form Container -->
@@ -104,7 +108,7 @@
         </form>
     </div>
 </div>
-
+</div>
 <script>
     // Initialize Lucide icons
     lucide.createIcons();

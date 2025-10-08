@@ -6,7 +6,18 @@
 </head>
 <body>
 
+
+
+<div class="main-content">
 <div class="container_vignette">
+
+
+    <!-- Header -->
+    <div class="header_vignette">
+        <h1>{{ $item ? 'Modifier' : 'Nouveau' }} Mouvement de Stock</h1>
+        <p>{{ $item ? 'Modifiez les informations du mouvement' : 'Enregistrez un nouveau mouvement de stock' }}</p>
+    </div>
+
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="{{ route('gestion.AM_mouvements') }}">
@@ -17,11 +28,6 @@
         <span>{{ $item ? 'Modifier' : 'Nouveau' }} Mouvement</span>
     </div>
 
-    <!-- Header -->
-    <div class="header_vignette">
-        <h1>{{ $item ? 'Modifier' : 'Nouveau' }} Mouvement de Stock</h1>
-        <p>{{ $item ? 'Modifiez les informations du mouvement' : 'Enregistrez un nouveau mouvement de stock' }}</p>
-    </div>
 
     <!-- Form Container -->
     <div class="form-container">
@@ -265,6 +271,8 @@
         </form>
     </div>
 </div>
+</div>
+
 
 <script>
     // Initialize Lucide icons

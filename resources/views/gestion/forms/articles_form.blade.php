@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +9,17 @@
 </head>
 <body>
 
+
+<div class="main-content">
 <div class="container_vignette">
+
+
+    <!-- Header -->
+    <div class="header_vignette">
+        <h1>{{ $item ? 'Modifier' : 'Nouvel' }} Article</h1>
+        <p>{{ $item ? 'Modifiez les informations de l\'article' : 'Créez un nouvel article dans votre inventaire' }}</p>
+    </div>
+
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="{{ route('gestion.AM_articles') }}">
@@ -16,12 +28,6 @@
         <a href="{{ route('gestion.AM_articles') }}">Gestion des Articles</a>
         <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
         <span>{{ $item ? 'Modifier' : 'Nouvel' }} Article</span>
-    </div>
-
-    <!-- Header -->
-    <div class="header_vignette">
-        <h1>{{ $item ? 'Modifier' : 'Nouvel' }} Article</h1>
-        <p>{{ $item ? 'Modifiez les informations de l\'article' : 'Créez un nouvel article dans votre inventaire' }}</p>
     </div>
 
     <!-- Form Container -->
@@ -383,7 +389,7 @@
 
             <!-- Actions -->
             <div class="form-actions">
-                <a href="{{ route('gestion.AM_articles') }}" class="btn btn-secondary">
+                <a href="{{ route('gestion.articles.1') }}" class="btn btn-secondary">
                     <i data-lucide="x"></i>
                     Annuler
                 </a>
@@ -394,6 +400,7 @@
             </div>
         </form>
     </div>
+</div>
 </div>
 
 <script>

@@ -5,8 +5,16 @@
     <title>{{ $item ? 'Modifier' : 'Créer' }} un fournisseur</title>
 </head>
 <body>
+<div class="main-content">
 
 <div class="container_vignette">
+
+
+    <!-- Header -->
+    <div class="header_vignette">
+        <h1>{{ $item ? 'Modifier' : 'Nouveau' }} Fournisseur</h1>
+        <p>{{ $item ? 'Modifiez les informations du fournisseur' : 'Créez un nouveau fournisseur dans votre base' }}</p>
+    </div>
     <!-- Breadcrumb -->
     <div class="breadcrumb">
         <a href="{{ route('gestion.AM_fournisseurs') }}">
@@ -15,12 +23,6 @@
         <a href="{{ route('gestion.AM_fournisseurs') }}">Gestion des Fournisseurs</a>
         <i data-lucide="chevron-right" style="width: 16px; height: 16px;"></i>
         <span>{{ $item ? 'Modifier' : 'Nouveau' }} Fournisseur</span>
-    </div>
-
-    <!-- Header -->
-    <div class="header_vignette">
-        <h1>{{ $item ? 'Modifier' : 'Nouveau' }} Fournisseur</h1>
-        <p>{{ $item ? 'Modifiez les informations du fournisseur' : 'Créez un nouveau fournisseur dans votre base' }}</p>
     </div>
 
     <!-- Form Container -->
@@ -431,6 +433,7 @@
             </div>
         </form>
     </div>
+</div>
 </div>
 
 <script>
