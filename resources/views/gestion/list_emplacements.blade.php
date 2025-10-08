@@ -7,7 +7,7 @@
 
     <div class="stats-bar">
         <div class="stat-card">
-            <div class="stat-number" style="color: var(--primary);">{{ $Emplacements_Count }}</div>
+            <div class="stat-number" style="color: var(--primary-color)">{{ $Emplacements_Count }}</div>
             <div class="stat-label">Emplacements Total</div>
         </div>
         <div class="stat-card">

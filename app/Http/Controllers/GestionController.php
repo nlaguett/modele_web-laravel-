@@ -195,7 +195,7 @@ class GestionController extends Controller
     public function index()
     {
         $data = [
-            'activepage' => 'index',
+            'activepage' => 'accueil',
             'sessionData' => $this->sessionData,
             'Articles_Count' => Article::count(),
             'Emplacements_Count' => Emplacement::count(),
@@ -213,7 +213,6 @@ class GestionController extends Controller
     public function list_articles()
     {
         $data = [
-            'activepage' => 'active',
             'Articles_Count' => Article::count(),
             'Article_actif' => Article::where('Article_Actif', 1)->count(),
             'champs' => $this->articleModel->getColumnNames(),

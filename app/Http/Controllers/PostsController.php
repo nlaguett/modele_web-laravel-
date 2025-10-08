@@ -42,10 +42,53 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $data = [
+            'activepage' => 'accueil'
+        ];
         $posts = Post::all();
         $sessionData = $this->getSessionData();
 
-        return view('header') . view('posts.index', compact('posts', 'sessionData')) . view('posts/sidebar');
+        return view('header', $data) . view('posts.index', compact('posts', 'sessionData')) . view('posts/sidebar', $data);
+    }
+
+    public function MesPages() {
+        $data = [
+            'activepage' => 'Pages'
+        ];
+        $posts = Post::all();
+        $sessionData = $this->getSessionData();
+        return view('header')
+            . view('posts.pages', compact('posts', 'sessionData'))
+            . view('posts.sidebar', $data);    }
+
+    public function Posts() {
+        $posts = Post::all();
+        $sessionData = $this->getSessionData();
+        return view('header') . view('posts.posts', compact('posts', 'sessionData')) . view('posts/sidebar');
+    }
+
+    public function Media() {
+        $posts = Post::all();
+        $sessionData = $this->getSessionData();
+        return view('header') . view('posts.media', compact('posts', 'sessionData')) . view('posts/sidebar');
+    }
+
+    public function Help() {
+        $posts = Post::all();
+        $sessionData = $this->getSessionData();
+        return view('header') . view('posts.help', compact('posts', 'sessionData')) . view('posts/sidebar');
+    }
+
+    public function Comments() {
+        $posts = Post::all();
+        $sessionData = $this->getSessionData();
+        return view('header') . view('posts.commentaires', compact('posts', 'sessionData')) . view('posts/sidebar');
+    }
+
+    public function Settings() {
+        $posts = Post::all();
+        $sessionData = $this->getSessionData();
+        return view('header') . view('posts.settings', compact('posts', 'sessionData')) . view('posts/sidebar');
     }
 
     /**
@@ -168,45 +211,6 @@ class PostsController extends Controller
     /**
      * Sauvegarde toutes les modifications (AJAX)
      */
-    public function saveAllModifications(Request $request)
-    {
-        // Vérifier que c'est une requête POST
-        if (!$request->isMethod('post')) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Requête invalide'
-            ], 400);
-        }
 
-        // Logger les données reçues
-        Log::debug('Données reçues : ', $request->all());
 
-        // Valider les données
-        $validated = $request->validate([
-            'modifications.id' => 'required|exists:posts,id',
-            'modifications.content' => 'required|string'
-        ]);
-
-        try {
-            $modifications = $validated['modifications'];
-
-            $post = Post::findOrFail($modifications['id']);
-            $post->update([
-                'content' => $modifications['content']
-            ]);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Modifications enregistrées avec succès'
-            ]);
-
-        } catch (\Exception $e) {
-            Log::error('Erreur lors de la sauvegarde : ' . $e->getMessage());
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Erreur lors de la mise à jour'
-            ], 500);
-        }
-    }
 }

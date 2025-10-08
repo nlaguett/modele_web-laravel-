@@ -142,7 +142,17 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
          */
         Route::prefix('posts')->name('posts.')->group(function () {
 
+                // Routes de base pour les posts
                 Route::get('/', [PostsController::class, 'index'])->name('index');
+                Route::get('/accueil', [PostsController::class, 'index'])->name('accueil');
+                Route::get('/pages', [PostsController::class, 'MesPages'])->name('pages');
+                Route::get('/posts', [PostsController::class, 'Posts'])->name('posts');
+                Route::get('/media', [PostsController::class, 'Media'])->name('media');
+                Route::get('comments', [PostsController::class, 'Comments'])->name('comments');
+                Route::get('/settings.blade.php', [PostsController::class, 'Settings'])->name('settings');
+                Route::get('help', [PostsController::class, 'Help'])->name('help');
+
+                // MODIFICATIONS DES POSTS
                 Route::get('/create', [PostsController::class, 'create'])->name('create');
                 Route::get('/edit/{id}', [PostsController::class, 'edit'])->name('edit');
                 Route::put('/{id}', [PostsController::class, 'update'])->name('update');
