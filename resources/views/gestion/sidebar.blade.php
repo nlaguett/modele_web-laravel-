@@ -317,24 +317,3 @@
 
     });
 </script>
-@if(session('loadSection'))
-    <script>
-        $(document).ready(function() {
-            // Charger automatiquement la section
-            const section = "{{ session('loadSection') }}";
-            const url = "{{ url('gestion') }}/" + section;
-
-            $('#contentArea').load(url, function(response, status) {
-                if (status === "success") {
-                    // Activer le menu correspondant
-                    setActiveMenuItem(section);
-
-                    @if(session('success'))
-                    // Afficher le message de succès
-                    alert("{{ session('success') }}");
-                    @endif
-                }
-            });
-        });
-    </script>
-@endif
