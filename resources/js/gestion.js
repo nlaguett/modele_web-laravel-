@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --------- Formulaire client (AJAX)
-    $(document).on("submit", "form#clientForm", function (e) {
+    $(document).on("submit", "forms#clientForm", function (e) {
         e.preventDefault();
         const formData = $(this).serialize();
 

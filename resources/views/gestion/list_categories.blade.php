@@ -40,69 +40,55 @@
                     <i data-lucide="download"></i>
                     Exporter
                 </button>
-{{--                <button type="button" class="btn btn-add" data-url="{{ route('gestion.categories.create') }}">--}}
-                    <i data-lucide="plus"></i>
-                    Nouvelle catégorie
-{{--                </button>--}}
+                <a href="{{ route('gestion.create', ['type' => 'categories']) }}" class="btn btn-primary btn-sm">
+                    ➕ Nouvel article
+                </a>
             </div>
         </div>
 
         <div id="resultatsCategories" class="resultatsClient"></div>
 
+
+        {{-- Liste des catégories --}}
         <div class="items-grid" id="itemsGrid">
-            <!-- Catégories -->
             @foreach($categories as $categorie)
-                <div class="item-card theme-categories">
-                    <div class="item-header">
-                        <h3 class="item-title">{{ $categorie->libelle ?? 'Sans titre' }}</h3>
-                    </div>
+                <x-item-card
+                    theme="categories"
+                    :title="$categorie->libelle ?? 'Sans titre'"
+                    :description="$categorie->Description_categorie_article"
+                    :showStatus="false">
+                    {{-- Pas de subtitle, pas de status pour les catégories --}}
 
-                    <div class="item-description expanded">
-                        {{ $categorie->	Description_categorie_article }}
-                    </div>
-
-                    <div class="item-details">
+                    {{-- Slot pour les détails (1 seul champ) --}}
+                    <x-slot:details>
                         <div class="detail-item">
                             <div class="detail-label">Articles Liés</div>
                             <div class="detail-value value-articles-count">
-                                {{-- Utiliser la relation ou valeur aléatoire --}}
-{{--                                {{ isset($categorie->articles) ? $categorie->articles->count() : rand(5, 50) }} articles--}}
+                                {{-- {{ $categorie->articles->count() ?? 0 }} articles --}}
+                                0 articles {{-- À remplacer quand tu auras la relation --}}
                             </div>
                         </div>
-                    </div>
+                    </x-slot:details>
 
-                    <div class="item-actions">
+                    {{-- Slot pour les actions (différentes des articles) --}}
+                    <x-slot:actions>
                         <button class="btn btn-outline btn-sm">
                             <i data-lucide="eye"></i>
                             Voir Articles
                         </button>
-{{--                        <button class="btn btn-outline btn-sm" onclick="window.location.href='{{ route('gestion.categories.edit', $categorie->IDcategorie_article) }}'">--}}
-                            <i data-lucide="edit"></i>
+                        <button class="btn btn-outline btn-sm">
+                            <a href="{{ route('gestion.edit', ['categories', $categorie->IDcategorie_article]) }}">
                             Modifier
-{{--                        </button>--}}
-                    </div>
-                </div>
-{{--                <div class="no-results-content">--}}
-{{--                    <div class="no-results-icon">📋</div>--}}
-{{--                    <h3>Aucune catégorie</h3>--}}
-{{--                    <p>Aucune catégorie n'a été créée pour le moment.</p>--}}
-{{--                    <button class="btn btn-primary" data-url="{{ route('gestion.categories.create') }}">--}}
-{{--                        <i data-lucide="plus"></i>--}}
-{{--                        Créer une catégorie--}}
-{{--                    </button>--}}
-{{--                </div>--}}
+                            </a>
+                        </button>
+
+                    </x-slot:actions>
+                </x-item-card>
             @endforeach
         </div>
+
+        <x-pagination-item :items="$categories" />
     </div>
-
-    <!-- FOOTER / PAGINATION -->
-    <div class="footer_list">
-        <div class="pagination-container">
-            {{ $categories->links() }}
-        </div>
-    </div>
-
-
     <script>
         // Initialize Lucide icons
         lucide.createIcons();

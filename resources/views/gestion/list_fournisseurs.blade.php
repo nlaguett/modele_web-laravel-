@@ -41,12 +41,9 @@
                     Exporter
                 </button>
 
-{{--                CREE LA ROUTE GESTION.FOURNISSEURS.CREATE--}}
-
-{{--                <button type="button" class="btn btn-add" data-url="{{ route('gestion.fournisseurs.create') }}">--}}
-{{--                    <i data-lucide="plus"></i>--}}
-{{--                    Nouveau Fournisseur--}}
-{{--                </button>--}}
+                <a href="{{ route('gestion.create', ['type' => 'fournisseurs']) }}" class="btn btn-primary btn-sm">
+                    ➕ Nouveau fournisseur
+                </a>
             </div>
         </div>
 
@@ -54,24 +51,18 @@
 
         <div class="items-grid" id="itemsGrid">
             @forelse($fournisseurs as $fournisseur)
-                <div class="item-card theme-articles"
-                     data-actif="{{ $fournisseur->actif ?? 1 }}"
-                     data-siret="{{ !empty($fournisseur->siret) ? 1 : 0 }}"
-                     data-has-commercial="{{ !empty($fournisseur->contact_Commercial) ? 1 : 0 }}">
+                <x-item-card
+                    theme="fournisseurs"
+                    :title="$fournisseur->Civilite . ' ' . $fournisseur->Nom . ' ' . $fournisseur->Prenom"
+                    :subtitle="!empty($fournisseur->siret) ? 'SIRET: ' . $fournisseur->siret : 'Particulier'"
+                    :showStatus="true"
+                    :status="$fournisseur->actif ?? 1"
+                    data-actif="{{ $fournisseur->actif ?? 1 }}"
+                    data-siret="{{ !empty($fournisseur->siret) ? 1 : 0 }}"
+                    data-has-commercial="{{ !empty($fournisseur->contact_Commercial) ? 1 : 0 }}">
 
-                    <div class="item-header">
-                        <div>
-                            <div class="item-title">
-                                {{ $fournisseur->Civilite }} {{ $fournisseur->Nom }} {{ $fournisseur->Prenom }}
-                            </div>
-                            <div class="item-reference">
-                                {{ !empty($fournisseur->siret) ? 'SIRET: ' . $fournisseur->siret : 'Particulier' }}
-                            </div>
-                        </div>
-                        <div class="status-badge status-active">Actif</div>
-                    </div>
-
-                    <div class="contact-section">
+                    {{-- Slot Contact --}}
+                    <x-slot:contact>
                         <div class="contact-item">
                             <i data-lucide="mail" class="contact-icon"></i>
                             <span>{{ $fournisseur->Email }}</span>
@@ -86,9 +77,10 @@
                                 <span>{{ $fournisseur->Mobile }}</span>
                             </div>
                         @endif
-                    </div>
+                    </x-slot:contact>
 
-                    <div class="address-section">
+                    {{-- Slot Adresse --}}
+                    <x-slot:address>
                         <i data-lucide="map-pin" class="address-icon"></i>
                         <div class="address-content">
                             <div>{{ $fournisseur->Adresse }}</div>
@@ -100,9 +92,12 @@
                                 <div>{{ $fournisseur->Pays }}</div>
                             @endif
                         </div>
-                    </div>
+                    </x-slot:address>
 
-                    <div class="item-details full-width">
+                    {{-- Slot Détails (conditionnels) --}}
+                    <x-slot:details>
+                        <x-slot:fullWidth>true</x-slot:fullWidth>
+
                         @if(!empty($fournisseur->contact_Commercial))
                             <div class="detail-item">
                                 <div class="detail-label">Contact Commercial</div>
@@ -138,10 +133,11 @@
                                 </div>
                             </div>
                         @endif
-                    </div>
+                    </x-slot:details>
 
+                    {{-- Slot Observations --}}
                     @if(!empty($fournisseur->Observations))
-                        <div class="observations-section">
+                        <x-slot:observations>
                             <div class="observations-label">
                                 <i data-lucide="message-square" class="obs-icon"></i>
                                 Observations
@@ -149,26 +145,30 @@
                             <div class="observations-content">
                                 {{ $fournisseur->Observations }}
                             </div>
-                        </div>
+                        </x-slot:observations>
                     @endif
 
-                    <div class="item-actions">
-{{--                        <button class="btn btn-outline btn-sm" onclick="window.location.href='{{ route('gestion.fournisseurs.edit', $fournisseur->IDFournisseur) }}'">--}}
-                            <i data-lucide="edit"></i>
-                            Modifier
+                    {{-- Slot Actions --}}
+                    <x-slot:actions>
+                        <button  class="btn btn-outline btn-sm">
+                            <a href="{{ route('gestion.edit', ['fournisseurs', $fournisseur->IDFournisseur]) }}">
+                                Modifier
+                            </a>
                         </button>
                         <button class="btn btn-outline btn-sm">
                             <i data-lucide="shopping-cart"></i>
                             Commandes
                         </button>
-                    </div>
-                </div>
+                    </x-slot:actions>
+                </x-item-card>
+
             @empty
                 <div class="no-results-content">
                     <div class="no-results-icon">🏢</div>
                     <h3>Aucun fournisseur</h3>
                     <p>Aucun fournisseur n'a été créé pour le moment.</p>
-{{--                    <button class="btn btn-primary" data-url="{{ route('gestion.fournisseurs.create') }}">--}}
+                    <button class="btn btn-primary">
+                        {{-- data-url="{{ route('gestion.fournisseurs.create') }}" --}}
                         <i data-lucide="plus"></i>
                         Créer un fournisseur
                     </button>
@@ -177,12 +177,8 @@
         </div>
     </div>
 
-    <!-- FOOTER / PAGINATION -->
-    <div class="footer_list">
-        <div class="pagination-container">
-            {{ $fournisseurs->links() }}
-        </div>
-    </div>
+    <x-pagination-item :items="$fournisseurs" />
+
 
     <script>
         let currentFilter = 'all';

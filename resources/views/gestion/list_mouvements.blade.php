@@ -6,15 +6,6 @@
         </div>
 
 
-        <!-- STATS BAR
-             afficher les stats avec les variables :
-             $mouvements_Count,
-             $entreesCount,
-             $sortiesCount,
-             $aujourdhuiCount
-         -->
-
-
         <div class="stats-bar">
             <div class="stat-card" data-filter="all" onclick="filterMouvements('all')">
                 <div class="stat-number" style="color: var(--primary);">{{ $mouvements_Count ?? 324 }}</div>
@@ -50,10 +41,9 @@
                     <i data-lucide="download"></i>
                     Exporter
                 </button>
-{{--                <button type="button" class="btn btn-add" data-url="{{ route('gestion.mouvements.create') }}">--}}
-                    <i data-lucide="plus"></i>
-                    Nouveau mouvement
-{{--                </button>--}}
+                <a href="{{ route('gestion.create', ['type' => 'mouvements']) }}" class="btn btn-primary btn-sm">
+                    ➕ Nouveau mouvement
+                </a>
             </div>
         </div>
 
@@ -148,9 +138,10 @@
                             <i data-lucide="eye"></i>
                             Voir Détails
                         </button>
-                        <button class="btn btn-outline btn-sm" onclick="window.location.href='{{ route('gestion.mouvements.edit', $mouvement->IDmouvement) }}'">
-                            <i data-lucide="edit"></i>
-                            Modifier
+                        <button  class="btn btn-outline btn-sm">
+                            <a href="{{ route('gestion.edit', ['mouvements', $mouvement->IDtype_mouvement_stock]) }}">
+                                Modifier
+                            </a>
                         </button>
                         <button class="btn btn-outline btn-sm">
                             <i data-lucide="printer"></i>
@@ -158,25 +149,14 @@
                         </button>
                     </div>
                 </div>
-                <div class="no-results-content">
-                    <div class="no-results-icon">📦</div>
-                    <h3>Aucun mouvement</h3>
-                    <p>Aucun mouvement n'a été enregistré pour le moment.</p>
-                    <button class="btn btn-primary" data-url="{{ route('gestion.mouvements.create') }}">
-                        <i data-lucide="plus"></i>
-                        Créer un mouvement
-                    </button>
-                </div>
+
             @endforeach
         </div>
     </div>
 
     <!-- FOOTER / PAGINATION -->
-    <div class="footer_list">
-        <div class="pagination-container">
-            {{ $mouvements->links() }}
-        </div>
-    </div>
+    <x-pagination-item :items="$mouvements" />
+
 
     <script>
         let currentFilter = 'all';

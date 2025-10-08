@@ -1,4 +1,34 @@
 @php
+    /**
+     *  Afficher du contenu seulement pour les admins.
+     *
+     * @can('update', $post)
+            <!-- The current user can update the post... -->
+        @elsecan('create', App\Models\Post::class)
+            <!-- The current user can create new posts... -->
+        @else
+            <!-- ... -->
+        @endcan
+
+        @cannot('update', $post)
+            <!-- The current user cannot update the post... -->
+        @elsecannot('create', App\Models\Post::class)
+            <!-- The current user cannot create new posts... -->
+        @endcannot
+     *
+     * Deuxième possibilité :
+     * @if (Auth::user()->can('update', $post))
+            <!-- The current user can update the post... -->
+        @endif
+
+        @unless (Auth::user()->can('update', $post))
+            <!-- The current user cannot update the post... -->
+        @endunless
+     *
+     */
+@endphp
+
+@php
     $modifier = asset('images/modifier.png');
 @endphp
 
@@ -45,10 +75,10 @@
                 <i data-lucide="download"></i>
                 Exporter
             </button>
-            <button type="button" class="btn btn-add" data-url="{{ url('gestion/articles/create') }}">
-                <i data-lucide="plus"></i>
-                Nouvel Article
-            </button>
+            <a href="{{ route('gestion.create', ['type' => 'articles']) }}" class="btn btn-primary btn-sm">
+                ➕ Nouvel article
+            </a>
+
         </div>
     </div>
     <div id="resultatsArticles" class="resultatsClient"></div>
@@ -102,10 +132,10 @@
             </div>
 
             <div class="item-actions">
-                <button class="btn btn-outline btn-sm">
-                    <a href="{{ url('gestion/edit/articles/' . $article->IDarticle) }}" class="ajax-link">
-                        <img src="{{ $modifier }}" style="height:20px;">
-                        <div class="menu">Modifier</div>
+
+                <button  class="btn btn-outline btn-sm">
+                    <a href="{{ route('gestion.edit', ['articles', $article->IDarticle]) }}">
+                        Modifier
                     </a>
                 </button>
                 <button class="btn btn-outline btn-sm">
@@ -117,12 +147,8 @@
     @endforeach
 </div>
 
-{{-- FOOTER / PAGINATION --}}
-<div class="footer_list">
-    <div class="pagination-container">
-        {{ $articles->links() }}
-    </div>
-</div>
+{{-- Remplace ton ancien footer par : --}}
+<x-pagination-item :items="$articles" />
 
 <script>
     // Script pour afficher les résultats de recherche via la searchbar
@@ -318,3 +344,5 @@
         }
     });
 </script>
+
+

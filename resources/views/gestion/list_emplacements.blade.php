@@ -40,10 +40,9 @@
                 <i data-lucide="download"></i>
                 Exporter
             </button>
-{{--            <button type="button" class="btn btn-add" data-url="<?= site_url('gestion/emplacements/create/') ?>">--}}
-{{--                <i data-lucide="plus"></i>--}}
-{{--                Nouvel Emplacement--}}
-{{--            </button>--}}
+            <a href="{{ route('gestion.create', ['type' => 'emplacements']) }}" class="btn btn-primary btn-sm">
+                ➕ Nouvel emplacement
+            </a>
         </div>
     </div>
     <div id="resultatsEmplacements" class="resultatsClient"></div>
@@ -101,10 +100,11 @@
                         <i data-lucide="eye"></i>
                         Voir Détails
                     </button>
-{{--                    <button class="btn btn-outline btn-sm" onclick="window.location.href='{{ route('gestion.emplacements.edit', $emplacement->IDemplacement) }}'">--}}
-                        <i data-lucide="edit"></i>
-                        Modifier
-{{--                    </button>--}}
+                    <button  class="btn btn-outline btn-sm">
+                        <a href="{{ route('gestion.edit', ['emplacements', $emplacement->IDemplacement]) }}">
+                            Modifier
+                        </a>
+                    </button>
                     <button class="btn btn-outline btn-sm">
                         <i data-lucide="package"></i>
                         Inventaire
@@ -127,9 +127,6 @@
 </div>
 
 <!-- FOOTER / PAGINATION -->
-<div class="footer_list">
-    <div class="pagination-container">
-        {{ $emplacements->links() }}
-    </div>
-</div>
+<x-pagination-item :items="$emplacements" />
+
 

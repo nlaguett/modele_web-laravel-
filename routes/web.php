@@ -11,8 +11,8 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\SocieteController;
 
 /**
- * Routes principales
- * page index, categorie dashboard.
+ * Ajouter le préfix AM_ pour le noms des routes, pour les routes
+ *
  */
 
 
@@ -54,34 +54,34 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
     // ========================================
         //                  GESTION
         // ========================================
-        Route::prefix('gestion')->group(function () {
-            // Page d'accueil gestion
-            Route::get('/', [GestionController::class, 'index'])->name('gestion.index');
-            Route::get('/accueil', [GestionController::class, 'index'])->name('gestion.index');
+    Route::prefix('gestion')->name('gestion.')->group(function () {
+        // Page d'accueil gestion
+        Route::get('/', [GestionController::class, 'index'])->name('index');
+        Route::get('/accueil', [GestionController::class, 'index'])->name('accueil');
 
-            // Listes
-            Route::get('/articles', [GestionController::class, 'list_articles'])->name('gestion.articles');
-            Route::get('/categories', [GestionController::class, 'list_categories'])->name('gestion.categories');
-            Route::get('/fournisseurs', [GestionController::class, 'list_fournisseurs'])->name('gestion.fournisseurs');
-            Route::get('/clients', [GestionController::class, 'list_clients'])->name('gestion.clients');
-            Route::get('/mouvements', [GestionController::class, 'mouvements'])->name('gestion.mouvements');
-            Route::get('/emplacements', [GestionController::class, 'emplacements'])->name('gestion.emplacements');
+        /**
+         * Gestion des formulaires - METTRE EN PREMIER (routes génériques)
+         * IMPORTANT : Ajouter le slash / au début pour la cohérence
+         */
+        Route::get('/{type}/create', [GestionController::class, 'create'])->name('create');
+        Route::post('/{type}', [GestionController::class, 'store'])->name('store');
+        Route::get('/{type}/{id}/edit', [GestionController::class, 'edit'])->name('edit');
+        Route::put('/{type}/{id}', [GestionController::class, 'update'])->name('update');
+        Route::delete('/{type}/{id}', [GestionController::class, 'destroy'])->name('destroy');
 
-            // Recherche AJAX
-            Route::get('/searchArticles', [GestionController::class, 'searchArticles'])->name('gestion.search-articles');
-            Route::get('/searchCategories', [GestionController::class, 'searchCategories'])->name('gestion.search-categories');
-            Route::get('/searchEmplacements', [GestionController::class, 'searchEmplacements'])->name('gestion.search-emplacements');
-            Route::get('/searchFournisseurs', [GestionController::class, 'searchFournisseurs'])->name('gestion.search-fournisseurs');
+        // Listes (routes spécifiques) - APRÈS les routes génériques
+        Route::get('/articles', [GestionController::class, 'list_articles'])->name('AM_articles');
+        Route::get('/categories', [GestionController::class, 'list_categories'])->name('AM_categories');
+        Route::get('/fournisseurs', [GestionController::class, 'list_fournisseurs'])->name('AM_fournisseurs');
+        Route::get('/mouvements', [GestionController::class, 'mouvements'])->name('AM_mouvements');
+        Route::get('/emplacements', [GestionController::class, 'emplacements'])->name('AM_emplacements');
 
-            // Edition et Création
-            Route::get('/edit/{entity}/{id}', [GestionController::class, 'edit'])
-                ->where('id', '[0-9]+')
-                ->name('gestion.edit');
-
-            Route::get('/{entity}/create', [GestionController::class, 'create_form'])->name('gestion.create-form');
-
-
-        });
+        // Searchbar ajax des listes dans gestion
+        Route::get('/searchArticles', [GestionController::class, 'searchArticles'])->name('search-articles');
+        Route::get('/searchCategories', [GestionController::class, 'searchCategories'])->name('search-categories');
+        Route::get('/searchEmplacements', [GestionController::class, 'searchEmplacements'])->name('search-emplacements');
+        Route::get('/searchFournisseurs', [GestionController::class, 'searchFournisseurs'])->name('search-fournisseurs');
+    });
 
         // ========================================
         //              UTILISATEURS

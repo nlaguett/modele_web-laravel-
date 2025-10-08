@@ -1,3 +1,25 @@
+:root {
+    --primary-color: #0458A7;
+    --primary-light: #edf0fb;
+    --primary-dark: #0f2a65;
+    --secondary-color: #3b3f5c;
+    --gray-light: #f5f7ff;
+    --gray-medium: #e6e9f4;
+    --gray-dark: #828795;
+    --danger: #f36c6c;
+    --success: #2dbf78;
+    --white: #ffffff;
+    --text-primary: #262a39;
+    --text-secondary: #6c7380;
+    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    --sidebar-width: 280px;
+    --header-height: 80px;
+    --border-radius: 18px;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --warning: #fbbf24;
+    --info: #3b82f6;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -970,24 +992,7 @@ vertical-align: middle;
 
 /*******Modification *******************/
 
-:root {
-    --primary-color: #0458A7;
-    --primary-light: #edf0fb;
-    --primary-dark: #0f2a65;
-    --secondary-color: #3b3f5c;
-    --gray-light: #f5f7ff;
-    --gray-medium: #e6e9f4;
-    --gray-dark: #828795;
-    --danger: #f36c6c;
-    --success: #2dbf78;
-    --white: #ffffff;
-    --text-primary: #262a39;
-    --text-secondary: #6c7380;
-    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    --sidebar-width: 280px;
-    --header-height: 80px;
-    --border-radius: 18px;
-  }
+
 
 
   /* Sidebar Styles */

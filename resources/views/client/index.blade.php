@@ -134,7 +134,7 @@
             });
 
             {{--// Soumission formulaire client--}}
-            {{--$(document).on("submit", "form[id='clientForm']", function (e) {--}}
+            {{--$(document).on("submit", "forms[id='clientForm']", function (e) {--}}
             {{--    e.preventDefault();--}}
             {{--    let formData = $(this).serialize();--}}
 

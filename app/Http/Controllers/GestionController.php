@@ -24,6 +24,8 @@ class GestionController extends Controller
     protected $emplacementModel;
     protected $mouvementModel;
 
+
+
     protected array $entitiesMeta = [
         'articles' => [
             'model' => 'articleModel',
@@ -343,56 +345,165 @@ class GestionController extends Controller
         return response()->json($resultats);
     }
 
-    // Édition
-    public function edit($entity, $id)
+    private function getModel($type)
     {
-        if (!isset($this->entitiesMeta[$entity])) {
-            abort(404, "Entité inconnue.");
+        if (!isset($this->entitiesMeta[$type])) {
+            abort(404, 'Type non trouvé');
         }
 
-        $meta = $this->entitiesMeta[$entity];
-        $modelName = 'App\\Models\\' . ucfirst(rtrim($entity, 's'));
-        $item = $modelName::find($id);
+        // Récupérer le nom de la propriété du modèle
+        $modelProperty = $this->entitiesMeta[$type]['model'];
 
-        if (!$item) {
-            abort(404, "Enregistrement non trouvé.");
+        // Retourner l'instance du modèle
+        return $this->{$modelProperty};
+    }
+
+    private function getEntityMeta($type)
+    {
+        if (!isset($this->entitiesMeta[$type])) {
+            abort(404, 'Type non trouvé');
+        }
+        return $this->entitiesMeta[$type];
+    }
+
+
+
+    public function create($type)
+    {
+        if (!isset($this->entitiesMeta[$type])) {
+            abort(404, 'Type non trouvé');
         }
 
         $data = [
-            'entity' => $entity,
-            'item' => $item,
-            'client' => $item,
-            'champs' => $meta['fields'],
-            'labels' => $meta['labels'],
+            'item' => null,
+            'type' => $type,
             'sessionData' => $this->sessionData
         ];
 
-        return view("gestion.{$entity}_form", $data);
+        return view('header', $data)
+            . view('gestion.sidebar', $data)
+            . view('gestion.forms.' . $type . '_form', $data);
     }
 
-    // Création
-    public function create_form($entity)
+
+
+    public function store(Request $request, $type)
     {
-        if (!isset($this->entitiesMeta[$entity])) {
-            abort(404, "Entité inconnue.");
+        $model = $this->getModel($type);
+        $meta = $this->getEntityMeta($type);
+
+        // Valider les données
+        $validated = $this->validateRequest($request, $type);
+
+        // Créer l'enregistrement
+        $model->insert($validated);
+
+        return redirect()->route('gestion.list_' . $type)
+            ->with('success', 'Élément créé avec succès !');
+    }
+
+    public function edit($type, $id)
+    {
+        if (!isset($this->entitiesMeta[$type])) {
+            abort(404, 'Type non trouvé');
         }
 
-        $meta = $this->entitiesMeta[$entity];
+        $model = $this->getModel($type);
+        $primaryKey = $this->getEntityMeta($type)['id'];
 
+        $item = $model->where($primaryKey, $id)->firstOrFail();
         $data = [
-            'entity' => $entity,
-            'item' => [],
-            'champs' => $meta['fields'],
-            'labels' => $meta['labels'],
-            'sessionData' => $this->sessionData,
+            'item' => $item,
+            'type' => $type,
+            'sessionData' => $this->sessionData
         ];
 
-        return view("gestion.{$entity}_form", $data);
+        return view('header' ) .
+            view('gestion.forms.' . $type . '_form', $data) .
+            view('gestion.sidebar');
+
     }
-    public function loadContent($section)
+
+    public function update(Request $request, $type, $id)
     {
-        return view("gestion.sections.$section");
-        // Exemple: resources/views/gestion/sections/articles.blade.php
+        $model = $this->getModel($type);
+        $meta = $this->getEntityMeta($type);
+
+        // Valider les données
+        $validated = $this->validateRequest($request, $type);
+
+        // Utiliser la clé primaire définie dans $entitiesMeta
+        $primaryKey = $meta['id'];
+
+        // Mettre à jour l'enregistrement
+        $model->where($primaryKey, $id)->update($validated);
+
+        return redirect()->route('gestion.list_' . $type)
+            ->with('success', 'Élément modifié avec succès !');
+    }
+
+    public function destroy($type, $id)
+    {
+        $model = $this->getModel($type);
+        $meta = $this->getEntityMeta($type);
+
+        // Utiliser la clé primaire définie dans $entitiesMeta
+        $primaryKey = $meta['id'];
+
+        // Supprimer l'enregistrement
+        $model->where($primaryKey, $id)->delete();
+
+        return redirect()->route('gestion.list_' . $type)
+            ->with('success', 'Élément supprimé avec succès !');
+    }
+
+    private function validateRequest(Request $request, $type)
+    {
+        $rules = $this->getValidationRules($type);
+        return $request->validate($rules);
+    }
+
+    private function getValidationRules($type)
+    {
+        $rules = [
+            'articles' => [
+                'nom_article' => 'required|max:255',
+                'PUHT' => 'nullable|numeric',
+                'reference_article' => 'nullable|max:255',
+                'code_barre' => 'nullable|max:255',
+                'Description_article' => 'nullable',
+                'IDcategorie_article' => 'nullable|exists:categories_articles,IDcategorie_article',
+            ],
+            'categories' => [
+                'libelle' => 'required|max:255',
+                'Description_categorie_article' => 'nullable',
+            ],
+            'emplacements' => [
+                'IDarticle' => 'required|exists:articles,IDarticle',
+                'place' => 'required|max:255',
+                'Quantite_stock' => 'required|numeric|min:0',
+            ],
+            'mouvements' => [
+                'Ref_fournisseur' => 'nullable|max:255',
+                'PrixAchatHT' => 'nullable|numeric',
+                'Quantite' => 'required|numeric',
+                'IDtype_mouvement' => 'required',
+                'IDemplacement' => 'required|exists:emplacements,IDemplacement',
+                'DateMouvement' => 'required|date',
+            ],
+            'fournisseurs' => [
+                'Nom' => 'required|max:255',
+                'Prenom' => 'nullable|max:255',
+                'Email' => 'nullable|email',
+                'Telephone' => 'nullable|max:20',
+                'Adresse' => 'nullable',
+                'CodePostal' => 'nullable|max:10',
+                'Ville' => 'nullable|max:255',
+                'Pays' => 'nullable|max:255',
+            ],
+        ];
+
+        return $rules[$type] ?? [];
     }
 
 }

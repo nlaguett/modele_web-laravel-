@@ -162,3 +162,158 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+
+        // Configuration AJAX globale pour Laravel (CSRF Token)
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // ============================================
+        // FONCTION DE CHANGEMENT DE PAGE
+        // ============================================
+        function changePage(page) {
+            const activeMenuItem = $('.nav-item.active').data('action');
+
+            if (!activeMenuItem || activeMenuItem === 'accueil') {
+                console.log('Pas de menu actif');
+                return;
+            }
+
+            const url = "{{ url('gestion') }}/" + activeMenuItem + "?page=" + page;
+
+            console.log("Chargement de la page " + page + " pour " + activeMenuItem);
+
+            $('#contentArea').css('opacity', '0.5');
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(response) {
+                    $('#contentArea').html(response).css('opacity', '1');
+
+                    // Scroll vers le haut de la zone de contenu
+                    $('#contentArea').get(0).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    console.log("Page " + page + " chargée avec succès");
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur lors du chargement de la page:', error);
+                    $('#contentArea').html('<h1>Erreur</h1><p>Impossible de charger le contenu demandé.</p>').css('opacity', '1');
+                }
+            });
+        }
+
+        // ============================================
+        // PAGINATION AJAX (inclut First, Previous, Numbers, Next, Last)
+        // ============================================
+        $(document).on('click', '.ajax-pagination', function(e) {
+            e.preventDefault();
+            const page = $(this).data('page');
+            console.log('Clic pagination vers page:', page); // Pour déboguer
+            changePage(page);
+        });
+
+        // ============================================
+        // GESTION DU MODAL "ALLER À LA PAGE" (bouton ...)
+        // ============================================
+
+        // Ouvrir le modal quand on clique sur "..."
+        $(document).on('click', '.goto-page-btn', function(e) {
+            e.preventDefault();
+            console.log('Bouton ... cliqué');
+
+            const modal = $('#gotoPageModal');
+            const pageInput = $('#pageNumberInput');
+
+            if (modal.length) {
+                modal.css('display', 'flex');
+                setTimeout(() => {
+                    pageInput.focus();
+                    pageInput.select();
+                }, 100);
+            } else {
+                console.error('Modal introuvable');
+            }
+        });
+
+        // Fermer le modal (bouton X)
+        $(document).on('click', '.close-modal', function() {
+            $('#gotoPageModal').css('display', 'none');
+        });
+
+        // Fermer le modal (bouton Annuler)
+        $(document).on('click', '.btn-cancel', function() {
+            $('#gotoPageModal').css('display', 'none');
+        });
+
+        // Fermer en cliquant en dehors du modal
+        $(document).on('click', '.goto-page-modal', function(e) {
+            if ($(e.target).hasClass('goto-page-modal')) {
+                $(this).css('display', 'none');
+            }
+        });
+
+        // Aller à la page (bouton Valider dans le modal)
+        $(document).on('click', '.btn-goto', function() {
+            const pageInput = $('#pageNumberInput');
+            const pageNumber = parseInt(pageInput.val());
+            const maxPage = parseInt(pageInput.attr('max'));
+
+            console.log('Aller à la page:', pageNumber);
+
+            if (pageNumber >= 1 && pageNumber <= maxPage) {
+                changePage(pageNumber);
+                $('#gotoPageModal').css('display', 'none');
+            } else {
+                alert('Veuillez entrer un numéro de page valide entre 1 et ' + maxPage);
+            }
+        });
+
+        // Valider avec la touche Enter dans l'input
+        $(document).on('keypress', '#pageNumberInput', function(e) {
+            if (e.key === 'Enter' || e.which === 13) {
+                $('.btn-goto').click();
+            }
+        });
+
+        // Fermer avec la touche Escape
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' || e.which === 27) {
+                const modal = $('#gotoPageModal');
+                if (modal.css('display') === 'flex') {
+                    modal.css('display', 'none');
+                }
+            }
+        });
+
+        // ============================================
+        // NAVIGATION MENU
+        // ============================================
+        $('.nav-menu a').click(function (e) {
+            e.preventDefault();
+            const action = $(this).data('action');
+            const url = "{{ url('gestion') }}/" + action;
+            console.log("url " + url);
+
+            if (action !== 'accueil') {
+                $('#contentArea').load(url, function (response, status) {
+                    if (status === "error") {
+                        $('#contentArea').html('<h1>Erreur</h1><p>Impossible de charger le contenu demandé.</p>');
+                    } else {
+                        console.log("Chargement réussi : " + action);
+                    }
+                });
+            } else {
+                location.reload();
+            }
+        });
+
+    });
+</script>
