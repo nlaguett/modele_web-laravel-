@@ -76,12 +76,7 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
         Route::get('/mouvements', [GestionController::class, 'mouvements'])->name('AM_mouvements');
         Route::get('/emplacements', [GestionController::class, 'emplacements'])->name('AM_emplacements');
 
-        // Searchbar ajax des listes dans gestion
-        Route::get('/searchArticles', [GestionController::class, 'searchArticles'])->name('search-articles');
-        Route::get('/searchCategories', [GestionController::class, 'searchCategories'])->name('search-categories');
-        Route::get('/searchEmplacements', [GestionController::class, 'searchEmplacements'])->name('search-emplacements');
-        Route::get('/searchFournisseurs', [GestionController::class, 'searchFournisseurs'])->name('search-fournisseurs');
-    });
+          });
 
         // ========================================
         //              UTILISATEURS
@@ -145,12 +140,12 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
                 // Routes de base pour les posts
                 Route::get('/', [PostsController::class, 'index'])->name('index');
                 Route::get('/accueil', [PostsController::class, 'index'])->name('accueil');
-                Route::get('/pages', [PostsController::class, 'MesPages'])->name('pages');
-                Route::get('/posts', [PostsController::class, 'Posts'])->name('posts');
-                Route::get('/media', [PostsController::class, 'Media'])->name('media');
-                Route::get('comments', [PostsController::class, 'Comments'])->name('comments');
-                Route::get('/settings.blade.php', [PostsController::class, 'Settings'])->name('settings');
-                Route::get('help', [PostsController::class, 'Help'])->name('help');
+                Route::get('/pages', [PostsController::class, 'mesPages'])->name('pages');
+                Route::get('/posts', [PostsController::class, 'posts'])->name('posts');
+                Route::get('/media', [PostsController::class, 'media'])->name('media');
+                Route::get('comments', [PostsController::class, 'comments'])->name('comments');
+                Route::get('/settings', [PostsController::class, 'settings'])->name('settings');
+                Route::get('/help', [PostsController::class, 'help'])->name('help');
 
                 // MODIFICATIONS DES POSTS
                 Route::get('/create', [PostsController::class, 'create'])->name('create');

@@ -90,73 +90,28 @@
             }
         });
 
-        // Fonction pour charger du contenu
-        function loadContent(url) {
-            $('#contentArea').load(url, function(response, status) {
-                if (status === "error") {
-                    $('#contentArea').html('<h1>Erreur</h1><p>Impossible de charger le contenu demandé.</p>');
-                }
-            });
-        }
 
-        // Navigation menu
-        $('.nav-menu a').click(function (e) {
-            e.preventDefault();
-            const action = $(this).data('action');
-            const url = "{{ url('gestion') }}/" + action;
-            console.log("url " + url);
 
-            if (action !== 'accueil') {
-                $('#contentArea').load(url, function (response, status) {
-                    if (status === "error") {
-                        $('#contentArea').html('<h1>Erreur</h1><p>Impossible de charger le contenu demandé.</p>');
-                    } else {
-                        console.log("Chargement réussi : " + action);
 
-                        if (action !== 'accueil') {
-                            console.log("Rechargement de la liste des articles !");
-                            if (typeof changePage === 'function') {
-                                changePage(1);
-                            }
-                        }
-                    }
-                });
-            } else {
-                location.reload();
-            }
-        });
-
-        // Liens dynamiques (délégation d'événements)
-        $('#contentArea').on('click', 'a.dynamic-link', function(e) {
-            e.preventDefault();
-            const url = $(this).attr('href');
-            loadContent(url);
-        });
-
-        // Boutons détails
-        $(document).on('click', '.btn-details', function() {
-            let type = $(this).parent().data('type');
-            let url = "{{ url('gestion/loadData') }}/" + type;
-
-            $('#table-content').html('<p>Chargement...</p>');
-
-            $.ajax({
-                url: url,
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#table-content').hide().html(response.html).fadeIn(300);
-
-                    // Vérifier si la fonction updateCharts existe
-                    if (typeof updateCharts === 'function' && response.chartData) {
-                        updateCharts(response.chartData);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Erreur AJAX:', error);
-                    $('#table-content').html('<h2>Erreur lors du chargement des données.</h2>');
-                }
-            });
-        });
     });
 </script>
+
+{{--<script>--}}
+{{--    // Fonction pour charger du contenu--}}
+{{--    function loadContent(url) {--}}
+{{--        $('#contentArea').load(url, function(response, status) {--}}
+{{--            if (status === "error") {--}}
+{{--                $('#contentArea').html('<h1>Erreur</h1><p>Impossible de charger le contenu demandé.</p>');--}}
+{{--            }--}}
+{{--        });--}}
+{{--    }--}}
+
+
+
+{{--    // Liens dynamiques (délégation d'événements)--}}
+{{--    $('#contentArea').on('click', 'a.dynamic-link', function(e) {--}}
+{{--        e.preventDefault();--}}
+{{--        const url = $(this).attr('href');--}}
+{{--        loadContent(url);--}}
+{{--    });--}}
+{{--</script>--}}

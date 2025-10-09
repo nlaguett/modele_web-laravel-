@@ -292,57 +292,7 @@ class GestionController extends Controller
 
 
 
-    // Recherche AJAX
-    public function searchArticles(Request $request)
-    {
-        $terme = $request->input('q');
-
-        $resultats = Article::where('nom_article', 'LIKE', "%{$terme}%")
-            ->orWhere('reference_article', 'LIKE', "%{$terme}%")
-            ->orWhere('code_barre', 'LIKE', "%{$terme}%")
-            ->orWhere('Description_article', 'LIKE', "%{$terme}%")
-            ->orWhere('CodeArticle', 'LIKE', "%{$terme}%")
-            ->limit(10)
-            ->get();
-
-        return response()->json($resultats);
-    }
-
-    public function searchCategories(Request $request)
-    {
-        $terme = $request->input('q');
-
-        $resultats = CategoriesArticlesModels::where('libelle', 'LIKE', "%{$terme}%")
-            ->orWhere('Description_categorie_article', 'LIKE', "%{$terme}%")
-            ->limit(10)
-            ->get();
-
-        return response()->json($resultats);
-    }
-
-    public function searchEmplacements(Request $request)
-    {
-        $terme = $request->input('q');
-
-        $resultats = Emplacement::where('place', 'LIKE', "%{$terme}%")
-            ->limit(10)
-            ->get();
-
-        return response()->json($resultats);
-    }
-
-    public function searchFournisseurs(Request $request)
-    {
-        $terme = $request->input('q');
-
-        $resultats = Fournisseur::where('Nom', 'LIKE', "%{$terme}%")
-            ->orWhere('Prenom', 'LIKE', "%{$terme}%")
-            ->orWhere('Email', 'LIKE', "%{$terme}%")
-            ->limit(10)
-            ->get();
-
-        return response()->json($resultats);
-    }
+   
 
     private function getModel($type)
     {

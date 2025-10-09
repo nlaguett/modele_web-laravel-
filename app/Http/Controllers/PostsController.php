@@ -42,53 +42,54 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $data = [
+        $posts = Post::all();
+        $sessionData = $this->getSessionData();
+
+        return view('posts.index', [
+            'posts' => $posts,
+            'sessionData' => $sessionData,
             'activepage' => 'accueil'
-        ];
-        $posts = Post::all();
-        $sessionData = $this->getSessionData();
-
-        return view('header', $data) . view('posts.index', compact('posts', 'sessionData')) . view('posts/sidebar', $data);
+        ]);
     }
 
-    public function MesPages() {
-        $data = [
-            'activepage' => 'Pages'
-        ];
-        $posts = Post::all();
+    public function mesPages()
+    {
         $sessionData = $this->getSessionData();
-        return view('header')
-            . view('posts.pages', compact('posts', 'sessionData'))
-            . view('posts.sidebar', $data);    }
 
-    public function Posts() {
-        $posts = Post::all();
-        $sessionData = $this->getSessionData();
-        return view('header') . view('posts.posts', compact('posts', 'sessionData')) . view('posts/sidebar');
+        return view('posts.pages', [
+            'sessionData' => $sessionData,
+            'activepage' => 'pages'
+        ]);
     }
 
-    public function Media() {
+    public function posts() {
         $posts = Post::all();
         $sessionData = $this->getSessionData();
-        return view('header') . view('posts.media', compact('posts', 'sessionData')) . view('posts/sidebar');
+        return view('posts.posts', compact('posts', 'sessionData'));
     }
 
-    public function Help() {
+    public function media() {
         $posts = Post::all();
         $sessionData = $this->getSessionData();
-        return view('header') . view('posts.help', compact('posts', 'sessionData')) . view('posts/sidebar');
+        return view('posts.media', compact('posts', 'sessionData'));
     }
 
-    public function Comments() {
+    public function help() {
         $posts = Post::all();
         $sessionData = $this->getSessionData();
-        return view('header') . view('posts.commentaires', compact('posts', 'sessionData')) . view('posts/sidebar');
+        return view('posts.help', compact('posts', 'sessionData'));
     }
 
-    public function Settings() {
+    public function comments() {
         $posts = Post::all();
         $sessionData = $this->getSessionData();
-        return view('header') . view('posts.settings', compact('posts', 'sessionData')) . view('posts/sidebar');
+        return view('posts.commentaires', compact('posts', 'sessionData'));
+    }
+
+    public function settings() {
+        $posts = Post::all();
+        $sessionData = $this->getSessionData();
+        return view('posts.settings', compact('posts', 'sessionData'));
     }
 
     /**

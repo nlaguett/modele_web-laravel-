@@ -44,3 +44,32 @@
     :navigation-items="$gestionMenu"
     :active-page="$activepage ?? ''"
 />
+
+<script>
+    // Navigation menu
+    $('.nav-menu a').click(function (e) {
+        e.preventDefault();
+        const action = $(this).data('action');
+        const url = "{{ url('gestion') }}/" + action;
+        console.log("url " + url);
+
+        if (action !== 'accueil') {
+            $('#contentArea').load(url, function (response, status) {
+                if (status === "error") {
+                    $('#contentArea').html('<h1>Erreur</h1><p>Impossible de charger le contenu demandé.</p>');
+                } else {
+                    console.log("Chargement réussi : " + action);
+
+                    if (action !== 'accueil') {
+                        console.log("Rechargement de la liste des articles !");
+                        if (typeof changePage === 'function') {
+                            changePage(1);
+                        }
+                    }
+                }
+            });
+        } else {
+            location.reload();
+        }
+    });
+</script>
