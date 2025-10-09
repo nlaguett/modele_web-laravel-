@@ -1272,49 +1272,6 @@ body {
     min-height: 32px;
 }
 
-/* ================================================================================
-   FILTRES ET SELECTS
-   ================================================================================ */
-
-.filter-select {
-    padding: 0.5rem 1rem;
-    border: 2px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.9rem;
-    background: var(--surface);
-    transition: var(--transition);
-    min-width: 120px;
-}
-
-.filter-select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-}
-
-.filter-chips {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-}
-
-.filter-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.25rem 0.75rem;
-    background: rgba(59, 130, 246, 0.1);
-    color: var(--primary-color);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.filter-chip-remove {
-    cursor: pointer;
-    color: var(--primary-color);
-    font-weight: bold;
-}
 
 /* ================================================================================
    TABLEAU PRINCIPAL

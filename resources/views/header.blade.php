@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/style/style_main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_mainGestion.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_mobile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style/style_mainPosts.css') }}"
 
     {{-- Styles conditionnels --}}
     @isset($clients)
