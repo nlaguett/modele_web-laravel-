@@ -59,11 +59,9 @@
     <div class="main-content">
         <div class="second_header">
             <div class="welcome-section">
-                <div class="card-icon">
                     <i class="browse-icon-42"></i>
                     <span class="welcome-title">Dashboard</span>
 
-                </div>
             </div>
 
             <div class="header-right">
@@ -83,7 +81,7 @@
             <section class="transfer-cards">
                 <div class="transfer-card">
                     <div class="card-icon">
-                        <i class="assigment-icon"></i>
+                        <i class="pages-icon"></i>
                     </div>
                     <div class="stat-info">
                         <p class="card-title">Pages Publiées</p>
@@ -92,7 +90,7 @@
                 </div>
                 <div class="transfer-card">
                     <div class="card-icon">
-                        <i class="fas fa-credit-card"></i>
+                        <i class="diversity-icon"></i>
                     </div>
                     <div class="stat-info">
                         <p class="card-title">Visiteurs (ce mois)</p>
@@ -101,7 +99,7 @@
                 </div>
                 <div class="transfer-card">
                     <div class="card-icon">
-                        <i class="fas fa-credit-card"></i>
+                        <i class="assigment-icon"></i>
                     </div>
                     <div class="stat-info">
                         <p class="card-title">Formulaires Soumis</>
@@ -130,10 +128,10 @@
                 <div class="card quick-actions">
                     <h2>Actions Rapides</h2>
                     <div class="action-buttons">
-                        <a href="#" class="btn-index btn-primary"><i class="material-icons">add</i> Nouvelle Page</a>
-                        <a href="#" class="btn-index btn-secondary"><i class="material-icons">perm_media</i> Gérer les Médias</a>
-                        <a href="#" class="btn-index btn-secondary"><i class="material-icons">comment</i> Voir Commentaires</a>
-                        <a href="#" class="btn-index btn-secondary"><i class="material-icons">settings</i> Paramètres</a>
+                        <a href="#" class="btn-index btn-primary"><i class="add-icon"></i> Nouvelle Page</a>
+                        <a href="#" class="btn-index btn-secondary"><i class="mediaNoir-icon"></i> Gérer les Médias</a>
+                        <a href="#" class="btn-index btn-secondary"><i class="commentRightNoir-icon"></i> Voir Commentaires</a>
+                        <a href="#" class="btn-index btn-secondary"><i class="settingsNoir-icon"></i> Paramètres</a>
                     </div>
                 </div>
 
@@ -142,22 +140,22 @@
                     <h2>Notifications</h2>
                     <ul class="notification-list">
                         <li class="notification-item warning">
-                            <i class="material-icons">update</i>
+                            <i class="history-icon"></i>
                             <span>Mise à jour Laravel disponible.</span>
                             <a href="#" class="btn-sm btn-warning">Voir</a>
                         </li>
                         <li class="notification-item info">
-                            <i class="material-icons">edit_note</i>
+                            <i class="editNote-icon"></i>
                             <span>3 brouillons de pages en attente.</span>
                             <a href="#" class="btn-sm btn-info">Gérer</a>
                         </li>
                         <li class="notification-item danger">
-                            <i class="material-icons">error_outline</i>
+                            <i class="error-icon"></i>
                             <span>Erreur SEO sur "Contactez-nous".</span>
                             <a href="#" class="btn-sm btn-danger">Corriger</a>
                         </li>
                         <li class="notification-item success">
-                            <i class="material-icons">check_circle_outline</i>
+                            <i class="checkCircle-icon"></i>
                             <span>Toutes les pages sont à jour.</span>
                         </li>
                     </ul>

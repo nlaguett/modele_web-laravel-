@@ -498,6 +498,7 @@ height: 20px;
 .attachFile-icon,
 .browse-icon,
 .commentRight-icon,
+.commentRightNoir-icon,
 .comments-icon,
 .commentsRight-icon,
 .diversity-icon,
@@ -506,15 +507,18 @@ height: 20px;
 .group-icon,
 .history-icon,
 .media-icon,
+.mediaNoir-icon,
 .pages-icon,
 .settings-icon,
+.settingsNoir-icon,
 .checkCircle-icon {
     display: inline-block;
     width: 24px;
     height: 24px;
+    margin: 0;
+    padding: 0;
     background-size: contain;
     background-repeat: no-repeat;
-
     background-position: center;
 }
 
@@ -522,6 +526,8 @@ height: 20px;
     display: inline-block;
     width: 42px;
     height: 42px;
+    margin: 0;
+    padding: 0;
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url('../../Images/logos/browse.png');
@@ -535,6 +541,10 @@ height: 20px;
 
 .addPhoto-icon {
     background-image: url('../../Images/logos/addPhoto.png');
+}
+
+.addPhotoNoir-icon {
+    background-image: url('../../Images/logos/addPhotoNoir.png');
 }
 
 .assigment-icon {
@@ -551,6 +561,10 @@ height: 20px;
 
 .commentRight-icon {
     background-image: url('../../Images/logos/commentRight.png');
+}
+
+.commentRightNoir-icon {
+    background-image: url('../../Images/logos/commentRightNoir.png');
 }
 
 .comments-icon {
@@ -585,12 +599,20 @@ height: 20px;
     background-image: url('../../Images/logos/media.png');
 }
 
+.mediaNoir-icon {
+    background-image: url('../../Images/logos/mediaNoir.png');
+}
+
 .pages-icon {
     background-image: url('../../Images/logos/pages.png');
 }
 
 .settings-icon {
     background-image: url('../../Images/logos/settings.png');
+}
+
+.settingsNoir-icon {
+    background-image: url('../../Images/logos/settingsNoir.png');
 }
 
 .checkCircle-icon {
@@ -1313,11 +1335,16 @@ vertical-align: middle;
   .welcome-section {
       display:flex;
       flex-direction: row;
+      height: 42px;
+      align-items: flex-end;
   }
 
   .welcome-title {
+      display:flex;
+      align-items:center;
     font-size: 36px;
     font-weight: 700;
+      width: 100%;
     background: linear-gradient(90deg, var(--text-primary), var(--primary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1327,6 +1354,11 @@ vertical-align: middle;
     display: flex;
     align-items: center;
     gap: 25px;
+  }
+
+  .second-header {
+      display:flex;
+      width: 100%;
   }
 
   .notification-bell {
@@ -1417,6 +1449,8 @@ vertical-align: middle;
     border-radius: 12px;
     display: flex;
     align-items: center;
+      width: 24px;
+      height: 24px;
     justify-content: center;
     margin-bottom: 20px;
     background-color: var(--primary-light);
