@@ -90,7 +90,7 @@ class SocieteController extends Controller
             'sessionData' => $this->sessionData
         ];
 
-        return view('header', $data)
+        return view('main-layout', $data)
             . view('societe.sidebar', $data)
             . view('societe.index', $data);
     }
@@ -101,7 +101,7 @@ class SocieteController extends Controller
             'sessionData' => $this->sessionData
         ];
 
-        return view('header', $data)
+        return view('main-layout', $data)
             . view('societe.parametres', $data)
             . view('societe.sidebar', $data);
     }

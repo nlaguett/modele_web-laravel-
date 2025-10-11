@@ -1,45 +1,22 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Modele')</title>
+@php
+    /*
+     * Ce fichier est le fichier header. il affiche seulement le menu de navigation.
+     * Pour l'afficher dans les pages, il faut le renvoyer dans le fichier layout.blade.php de chaque categories
+     * gestion, posts, clients, societe etc...
+     * Pour le renvoyer dans ces fichier layout il faut faire @include('header')
+     */
+@endphp
 
-    {{-- jQuery --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    {{-- Google Material Icons --}}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    {{-- Styles principaux --}}
-    <link rel="stylesheet" href="{{ asset('css/style/style_main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style/style_mainGestion.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style/style_mobile.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style/style_mainPosts.css') }}"
-
-    {{-- Styles conditionnels --}}
-    @isset($clients)
-    <link rel="stylesheet" href="{{ asset('style/style_mainClient.css') }}">
-    @endisset
-
-    @isset($societe)
-    <link rel="stylesheet" href="{{ asset('style/style_mainSociete.css') }}">
-    @endisset
-
-    {{-- Styles supplémentaires par page --}}
-    @stack('styles')
-</head>
-<body>
-{{-- Header --}}
-@include('partials.header')
-
-{{-- Contenu principal --}}
-<main>
-    @yield('content')
-</main>
-
-{{-- Scripts supplémentaires par page --}}
-@stack('scripts')
-</body>
-</html>
-
+{{-- resources/views/header.blade.php --}}
+<header class="header">
+    <div class="user-info">
+        <span>Bonjour : {{ $sessionData['prenom'] ?? '' }}&nbsp;{{ $sessionData['nom'] ?? '' }}</span>
+        &nbsp;&nbsp;&nbsp;<span></span>
+    </div>
+    <a href="{{ route('dashboard') }}" class="navigation">
+        <button class="logout-btn">Retour</button>
+    </a>&nbsp;&nbsp;&nbsp;
+    <a href="{{ route('admin.deconnexion') }}" class="navigation">
+        <button class="logout-btn">Déconnexion</button>
+    </a>
+</header>

@@ -42,54 +42,121 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        $sessionData = $this->getSessionData();
+        $data = [
+            'activepage' => 'accueil',
+            'posts' => Post::all(),
+            'sessionData' => $this->getSessionData()
+        ];
 
-        return view('posts.index', [
-            'posts' => $posts,
-            'sessionData' => $sessionData,
-            'activepage' => 'accueil'
-        ]);
+        // Si requête AJAX → retourner seulement le contenu partiel
+        if (request()->ajax()) {
+            return view('posts.partials.index', $data);
+        }
+
+        // Sinon → retourner la vue complète avec layout
+        return view('posts.index', $data);
     }
 
     public function mesPages()
     {
-        $sessionData = $this->getSessionData();
+        $data = [
+            'activepage' => 'pages',
+            'posts' => Post::all(),
+            'sessionData' => $this->getSessionData()
+        ];
 
-        return view('posts.pages', [
-            'sessionData' => $sessionData,
-            'activepage' => 'pages'
-        ]);
+        // Si requête AJAX → retourner seulement le contenu partiel
+        if (request()->ajax()) {
+            return view('posts.partials.pages', $data);
+        }
+
+        // Sinon → retourner la vue complète avec layout
+        return view('posts.pages', $data);
     }
 
-    public function posts() {
-        $posts = Post::all();
-        $sessionData = $this->getSessionData();
-        return view('posts.posts', compact('posts', 'sessionData'));
+    public function posts()
+    {
+        $data = [
+            'activepage' => 'posts',
+            'posts' => Post::all(),
+            'sessionData' => $this->getSessionData()
+        ];
+
+        // Si requête AJAX → retourner seulement le contenu partiel
+        if (request()->ajax()) {
+            return view('posts.partials.posts', $data);
+        }
+
+        // Sinon → retourner la vue complète avec layout
+        return view('posts.posts', $data);
     }
 
-    public function media() {
-        $posts = Post::all();
-        $sessionData = $this->getSessionData();
-        return view('posts.media', compact('posts', 'sessionData'));
+    public function media()
+    {
+        $data = [
+            'activepage' => 'media',
+            'posts' => Post::all(),
+            'sessionData' => $this->getSessionData()
+        ];
+
+        // Si requête AJAX → retourner seulement le contenu partiel
+        if (request()->ajax()) {
+            return view('posts.partials.media', $data);
+        }
+
+        // Sinon → retourner la vue complète avec layout
+        return view('posts.media', $data);
     }
 
-    public function help() {
-        $posts = Post::all();
-        $sessionData = $this->getSessionData();
-        return view('posts.help', compact('posts', 'sessionData'));
+    public function comments()
+    {
+        $data = [
+            'activepage' => 'comments',
+            'posts' => Post::all(),
+            'sessionData' => $this->getSessionData()
+        ];
+
+        // Si requête AJAX → retourner seulement le contenu partiel
+        if (request()->ajax()) {
+            return view('posts.partials.commentaires', $data);
+        }
+
+        // Sinon → retourner la vue complète avec layout
+        return view('posts.commentaires', $data);
     }
 
-    public function comments() {
-        $posts = Post::all();
-        $sessionData = $this->getSessionData();
-        return view('posts.commentaires', compact('posts', 'sessionData'));
+    public function settings()
+    {
+        $data = [
+            'activepage' => 'settings',
+            'posts' => Post::all(),
+            'sessionData' => $this->getSessionData()
+        ];
+
+        // Si requête AJAX → retourner seulement le contenu partiel
+        if (request()->ajax()) {
+            return view('posts.partials.settings', $data);
+        }
+
+        // Sinon → retourner la vue complète avec layout
+        return view('posts.settings', $data);
     }
 
-    public function settings() {
-        $posts = Post::all();
-        $sessionData = $this->getSessionData();
-        return view('posts.settings', compact('posts', 'sessionData'));
+    public function help()
+    {
+        $data = [
+            'activepage' => 'help',
+            'posts' => Post::all(),
+            'sessionData' => $this->getSessionData()
+        ];
+
+        // Si requête AJAX → retourner seulement le contenu partiel
+        if (request()->ajax()) {
+            return view('posts.partials.help', $data);
+        }
+
+        // Sinon → retourner la vue complète avec layout
+        return view('posts.help', $data);
     }
 
     /**

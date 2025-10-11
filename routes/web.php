@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
  */
 Route::middleware('auth' , 'session.timeout')->group(function () {
         Route::get('/', function () {
-            return view('header') . view('dashboard.index');
+            return view('main-layout') . view('dashboard.index');
         });
         Route::post('/logout', [UsersController::class, 'logout'])->name('logout');
         Route::get('/logout', [UsersController::class, 'logout'])->name('admin.deconnexion');

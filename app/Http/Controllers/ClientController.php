@@ -68,7 +68,7 @@ class ClientController extends Controller
         $activepage = 'index';
         $champs = (new Client())->getFillable();
 
-        return view('header') . view('client.index', compact('clients', 'sessionData', 'activepage', 'champs'))
+        return view('main-layout') . view('client.index', compact('clients', 'sessionData', 'activepage', 'champs'))
             . view('client.sidebar');
     }
 

@@ -46,7 +46,7 @@ class DashboardController extends Controller
             'sessionData' => $this->sessionData
         ];
 
-        return view('header', $data)
+        return view('main-layout', $data)
             . view('dashboard.index', $data)
             . view('dashboard.sidebar', $data);
     }

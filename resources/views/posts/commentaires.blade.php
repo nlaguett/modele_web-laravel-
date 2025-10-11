@@ -1,4 +1,5 @@
-<div class="page-content">
-    <h1>Mes Commentaires</h1>
-    <p>Bienvenue sur la section des pages de blog !</p>
-</div>
+@extends('posts.layout')
+
+@section('content')
+    @include('posts.partials.commentaires')
+@endsection

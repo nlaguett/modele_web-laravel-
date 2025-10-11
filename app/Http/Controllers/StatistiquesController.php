@@ -52,7 +52,7 @@ class StatistiquesController extends Controller
     {
         $data['sessionData'] = $this->sessionData;
 
-        return view('header', $data)
+        return view('main-layout', $data)
             . view('statistiques.index', $data)
             . view('statistiques.sidebar', $data);
     }

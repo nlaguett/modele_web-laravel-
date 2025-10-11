@@ -204,7 +204,7 @@ class GestionController extends Controller
             'count_clients' => Client::count(),
         ];
 
-        return view('header', $data)
+        return view('main-layout', $data)
             . view('gestion.sidebar', $data)
             . view('gestion.index', $data);
 //            . view('footer');  // TEMPORAIREMENT DESACTIVER (Il existe sur l'ancien site web mais il est empty)
@@ -292,7 +292,7 @@ class GestionController extends Controller
 
 
 
-   
+
 
     private function getModel($type)
     {
@@ -329,7 +329,7 @@ class GestionController extends Controller
             'sessionData' => $this->sessionData
         ];
 
-        return view('header', $data)
+        return view('main-layout', $data)
             . view('gestion.sidebar', $data)
             . view('gestion.forms.' . $type . '_form', $data);
     }
@@ -368,7 +368,7 @@ class GestionController extends Controller
             'sessionData' => $this->sessionData
         ];
 
-        return view('header' ) .
+        return view('main-layout' ) .
             view('gestion.forms.' . $type . '_form', $data) .
             view('gestion.sidebar');
 

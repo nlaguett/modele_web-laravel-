@@ -1,5 +1,5 @@
 @extends('posts.layout')
 
 @section('content')
-    @include('posts.partials.media')
+    @include('posts.partials.help')
 @endsection
