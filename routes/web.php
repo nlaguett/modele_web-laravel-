@@ -74,14 +74,14 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
         Route::get('/articles', [GestionController::class, 'list_articles'])->name('AM_articles');
         Route::get('/categories', [GestionController::class, 'list_categories'])->name('AM_categories');
         Route::get('/fournisseurs', [GestionController::class, 'list_fournisseurs'])->name('AM_fournisseurs');
-        Route::get('/mouvements', [GestionController::class, 'mouvements'])->name('AM_mouvements');
-        Route::get('/emplacements', [GestionController::class, 'emplacements'])->name('AM_emplacements');
+        Route::get('/mouvements', [GestionController::class, 'list_mouvements'])->name('AM_mouvements');
+        Route::get('/emplacements', [GestionController::class, 'list_emplacements'])->name('AM_emplacements');
         // Routes post crée pour la pagination dans les listes de gestion.
         Route::post('/articles', [GestionController::class, 'list_articles'])->name('AM_articles');
         Route::post('/categories', [GestionController::class, 'list_categories'])->name('AM_categories');
         Route::post('/fournisseurs', [GestionController::class, 'list_fournisseurs'])->name('AM_fournisseurs');
-        Route::post('/mouvements', [GestionController::class, 'mouvements'])->name('AM_mouvements');
-        Route::post('/emplacements', [GestionController::class, 'emplacements'])->name('AM_emplacements');
+        Route::post('/mouvements', [GestionController::class, 'list_mouvements'])->name('AM_mouvements');
+        Route::post('/emplacements', [GestionController::class, 'list_emplacements'])->name('AM_emplacements');
 
           });
 

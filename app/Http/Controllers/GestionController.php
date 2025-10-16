@@ -273,8 +273,9 @@ class GestionController extends Controller
     public function list_emplacements()
     {
         $data = [
-            'Emplacements_Count' => Emplacement::count(),
-            'Emplacements_actif' => Emplacement::where('Emplacements_actif', 1)->count(),
+            'Emplacements_Count' => $this->emplacementModel->getEmplacementsCount(),
+            // AJOUTER EMPLACEMENTS_ACTIF DANS LE MODEL
+//            'Emplacements_actif' => Emplacement::where('Emplacements_actif', 1)->count(),
             'champs' => $this->emplacementModel->getColumnNames(),
             'emplacements' => Emplacement::paginate(10),
             'activepage' => 'emplacements',
@@ -295,7 +296,8 @@ class GestionController extends Controller
     public function list_mouvements()
     {
         $data = [
-            // Vos données de mouvements
+            'champs' => $this->mouvementModel->getColumnNames(),
+            'mouvements' => $this->mouvementModel->paginate(10),
             'activepage' => 'mouvements',
             'sessionData' => $this->sessionData
         ];

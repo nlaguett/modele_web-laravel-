@@ -37,42 +37,42 @@ class EmplacementsModels extends Model
     /**
      * Relation avec l'article
      */
-    public function article()
-    {
-        return $this->belongsTo(Article::class, 'IDarticle', 'IDarticle');
-    }
+//    public function article()
+//    {
+//        return $this->belongsTo(Article::class, 'IDarticle', 'IDarticle');
+//    }
 
     /**
      * Scope pour recherche
      */
-    public function scopeSearch($query, string $terme)
-    {
-        if (trim($terme) === '') {
-            return $query;
-        }
-
-        return $query->where(function($q) use ($terme) {
-            $q->where('place', 'LIKE', "%{$terme}%")
-                ->orWhere('Quantite_stock', 'LIKE', "%{$terme}%")
-                ->orWhereHas('article', function($query) use ($terme) {
-                    $query->where('nom_article', 'LIKE', "%{$terme}%");
-                });
-        });
-    }
-
-    /**
-     * Vérifie si le stock est disponible
-     */
-    public function hasStock()
-    {
-        return $this->Quantite_stock > 0;
-    }
-
-    /**
-     * Récupère le stock total d'un article
-     */
-    public static function getStockTotal($idArticle)
-    {
-        return self::where('IDarticle', $idArticle)->sum('Quantite_stock');
-    }
+//    public function scopeSearch($query, string $terme)
+//    {
+//        if (trim($terme) === '') {
+//            return $query;
+//        }
+//
+//        return $query->where(function($q) use ($terme) {
+//            $q->where('place', 'LIKE', "%{$terme}%")
+//                ->orWhere('Quantite_stock', 'LIKE', "%{$terme}%")
+//                ->orWhereHas('article', function($query) use ($terme) {
+//                    $query->where('nom_article', 'LIKE', "%{$terme}%");
+//                });
+//        });
+//    }
+//
+//    /**
+//     * Vérifie si le stock est disponible
+//     */
+//    public function hasStock()
+//    {
+//        return $this->Quantite_stock > 0;
+//    }
+//
+//    /**
+//     * Récupère le stock total d'un article
+//     */
+//    public static function getStockTotal($idArticle)
+//    {
+//        return self::where('IDarticle', $idArticle)->sum('Quantite_stock');
+//    }
 }
