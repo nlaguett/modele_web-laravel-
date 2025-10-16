@@ -984,6 +984,8 @@ vertical-align: middle;
     padding: 0;        /* ✅ Enlève les indentations */
   }
 
+
+
   .pagination li {
     margin: 0 5px;
   }
@@ -2194,3 +2196,34 @@ vertical-align: middle;
       padding: 12px 20px;
     }
   }
+/* Conteneur principal */
+.pagination {
+    display: flex;
+    list-style: none;
+    gap: 5px;
+}
+
+/* Chaque élément de page */
+.page-item {
+    /* ton style */
+}
+
+/* Les liens */
+.page-link {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+}
+
+/* Page active */
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Éléments désactivés (Précédent/Suivant) */
+.page-item.disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+}

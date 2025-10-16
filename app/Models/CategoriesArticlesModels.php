@@ -29,6 +29,11 @@ class CategoriesArticlesModels extends Model
         return DB::getSchemaBuilder()->getColumnListing($this->table);
     }
 
+    public static function getCategoriesCount(): int
+    {
+        return self::count();
+    }
+
     /**
      * Compte toutes les catégories
      */

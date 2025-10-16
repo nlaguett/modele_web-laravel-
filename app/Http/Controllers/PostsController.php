@@ -37,7 +37,7 @@ class PostsController extends Controller
         ];
     }
 
-    /**
+     /**
      * Affiche la liste des posts
      */
     public function index()

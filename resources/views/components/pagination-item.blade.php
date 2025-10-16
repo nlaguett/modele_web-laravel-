@@ -16,7 +16,7 @@
             </div>
 
             <nav class="pagination-nav" role="navigation" aria-label="Pagination">
-                <ul class="pagination-list">
+                <ul class="pagination-list" data-max-page="{{ $items->lastPage() }}">
                     {{-- Bouton Première Page --}}
                     @if ($items->currentPage() > 1)
                         <li class="pagination-item">

@@ -9,6 +9,9 @@
 
 {{-- resources/views/header.blade.php --}}
 <header class="header">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Ensure jQuery is loaded -->
+
+
     <div class="user-info">
         <span>Bonjour : {{ $sessionData['prenom'] ?? '' }}&nbsp;{{ $sessionData['nom'] ?? '' }}</span>
         &nbsp;&nbsp;&nbsp;<span></span>

@@ -1,3 +1,5 @@
+<script src="../gestion/Searchbar.js"></script>
+
 @props([
     'searchId' => 'searchInput',
     'targetGrid' => 'itemsGrid',

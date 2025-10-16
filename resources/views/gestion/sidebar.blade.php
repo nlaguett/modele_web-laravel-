@@ -1,9 +1,8 @@
-
 @php
     $gestionMenu = [
         [
             'action' => 'accueil',
-            'label' => 'dashboard',
+            'label' => 'Dashboard',
             'href' => '#',
             "svg" => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M0 24C0 10.7 10.7 0 24 0L69.5 0c22 0 41.5 12.8 50.6 32l411 0c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3l-288.5 0 5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5L488 336c13.3 0 24 10.7 24 24s-10.7 24-24 24l-288.3 0c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5L24 48C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>'
         ],
@@ -46,30 +45,64 @@
 />
 
 <script>
-    // Navigation menu
-    $('.nav-menu a').click(function (e) {
-        e.preventDefault();
-        const action = $(this).data('action');
-        const url = "{{ url('gestion') }}/" + action;
-        console.log("url " + url);
+    $(document).ready(function() {
+        // Configuration AJAX
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-        if (action !== 'accueil') {
-            $('#contentArea').load(url, function (response, status) {
-                if (status === "error") {
-                    $('#contentArea').html('<h1>Erreur</h1><p>Impossible de charger le contenu demandé.</p>');
-                } else {
-                    console.log("Chargement réussi : " + action);
+        // Navigation menu
+        $('.nav-menu a').click(function (e) {
+            e.preventDefault();
+            const action = $(this).data('action');
+            const url = "{{ url('gestion') }}/" + action;  // ✅ Correct : 'gestion'
 
-                    if (action !== 'accueil') {
-                        console.log("Rechargement de la liste des articles !");
-                        if (typeof changePage === 'function') {
-                            changePage(1);
-                        }
+            console.log("Action:", action);
+            console.log("URL:", url);
+
+            // Si accueil, recharger la page
+            if (action === 'accueil') {
+                window.location.reload();
+                return;
+            }
+
+            // Marquer comme actif
+            $('.nav-item').removeClass('active');
+            $(this).addClass('active');
+
+            // Afficher loader
+            $('#contentArea').html(`
+            <div class="text-center p-5">
+                <div class="spinner-border text-primary"></div>
+                <p class="mt-3">Chargement...</p>
+            </div>
+        `);
+
+            // Charger le contenu via AJAX
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(response) {
+                    console.log("✅ Chargement réussi:", action);
+                    $('#contentArea').html(response);
+
+                    // Fonction changePage si elle existe
+                    if (typeof changePage === 'function') {
+                        changePage(1);
                     }
+                },
+                error: function(xhr, status, error) {
+                    console.error("❌ Erreur AJAX:", error);
+                    $('#contentArea').html(`
+                    <div class="alert alert-danger m-5">
+                        <h4>Erreur</h4>
+                        <p>Impossible de charger "${action}"</p>
+                    </div>
+                `);
                 }
             });
-        } else {
-            location.reload();
-        }
+        });
     });
 </script>

@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@extends('gestion.layout')
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-</head>
-<body>
-
-b
 @php
     $champs = $champs ?? [];
 
@@ -20,9 +8,9 @@ b
     $currentPage = request()->input('page', 1);
 @endphp
 
-
+@section('content')
 <main class="main-content">
-    <div id="contentArea" class="content-area">
+    <div  class="content-area">
         <div class="dashboard-container-column">
             <h1 class="welcome-title">Espace de gestion</h1>
         </div>
@@ -83,8 +71,8 @@ b
         </div>
     </div>
 </main>
+@endsection
 
-{{-- JavaScript --}}
 <script>
     $(document).ready(function () {
         $(document).on('click', '.has-submenu > a', function (e) {
@@ -421,7 +409,5 @@ b
             });
         }
     });
-</script>
 
-</body>
-</html>
+</script>

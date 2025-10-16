@@ -204,14 +204,15 @@ class GestionController extends Controller
             'count_clients' => Client::count(),
         ];
 
-        return view('main-layout', $data)
-            . view('gestion.sidebar', $data)
-            . view('gestion.index', $data);
-//            . view('footer');  // TEMPORAIREMENT DESACTIVER (Il existe sur l'ancien site web mais il est empty)
+        return view('gestion.index', $data);
     }
 
+    /**
+     * Liste des articles (AJAX - HTML uniquement)
+     */
     public function list_articles()
     {
+
         $data = [
             'Articles_Count' => Article::count(),
             'Article_actif' => Article::where('Article_Actif', 1)->count(),
@@ -221,9 +222,16 @@ class GestionController extends Controller
             'sessionData' => $this->sessionData
         ];
 
+        if (request()->ajax()) {
+            return view('gestion.partials.list_articles', $data);
+        }
+
         return view('gestion.list_articles', $data);
     }
 
+    /**
+     * Liste des catégories (AJAX - HTML uniquement)
+     */
     public function list_categories()
     {
         $data = [
@@ -233,9 +241,15 @@ class GestionController extends Controller
             'sessionData' => $this->sessionData,
             'pager' => $this->categorieArticleModel->pager,
         ];
+        if (request()->ajax()) {
+            return view('gestion.partials.list_categories', $data);
+        }
         return view('gestion.list_categories', $data);
     }
 
+    /**
+     * Liste des fournisseurs (AJAX - HTML uniquement)
+     */
     public function list_fournisseurs()
     {
         $data = [
@@ -244,9 +258,43 @@ class GestionController extends Controller
             'Fournisseurs_Count' => Fournisseur::count(),
             'sessionData' => $this->sessionData
         ];
-
+        if (request()->ajax()) {
+            return view('gestion.partials.list_fournisseurs', $data);
+        }
         return view('gestion.list_fournisseurs', $data);
     }
+
+    /**
+     * Liste des emplacements (AJAX - HTML uniquement)
+     */
+    public function list_emplacements()
+    {
+        $data = [
+            'emplacements' => Emplacement::paginate(10),
+            'Emplacements_Count' => Emplacement::count(),
+            'sessionData' => $this->sessionData
+        ];
+        if (request()->ajax()) {
+            return view('gestion.partials.list_emplacements', $data);
+        }
+        return view('gestion.list_emplacements', $data);
+    }
+
+    /**
+     * Liste des mouvements (AJAX - HTML uniquement)
+     */
+    public function list_mouvements()
+    {
+        $data = [
+            // Vos données de mouvements
+            'sessionData' => $this->sessionData
+        ];
+        if (request()->ajax()) {
+            return view('gestion.partials.list_mouvements', $data);
+        }
+        return view('gestion.list_mouvements', $data);
+    }
+
 
 
     /** LIST_CLIENT supprimée de Gestion,

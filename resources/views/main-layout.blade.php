@@ -15,15 +15,12 @@
     <link rel="stylesheet" href="{{ asset('css/style/style_mainGestion.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_mobile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_mainPosts.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Styles conditionnels --}}
-    @isset($clients)
     <link rel="stylesheet" href="{{ asset('style/style_mainClient.css') }}">
-    @endisset
 
-    @isset($societe)
     <link rel="stylesheet" href="{{ asset('style/style_mainSociete.css') }}">
-    @endisset
 
     {{-- Styles supplémentaires par page --}}
     @stack('styles')

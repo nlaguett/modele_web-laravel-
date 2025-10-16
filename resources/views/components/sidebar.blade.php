@@ -12,6 +12,7 @@
 
 {{-- Sidebar --}}
 <div class="sidebar_accueil">
+
     {{-- Logo --}}
     <div class="logo">
         <img class="logo-size" src="{{ asset($logo) }}" alt="{{ $logoAlt }}">

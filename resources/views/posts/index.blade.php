@@ -1,7 +1,5 @@
 @extends('posts.layout')
 
-
-
 {{--@section('content')--}}
 {{--<div style="width:100%;display:flex;flex-direction:column;align-content:center;justify-content:center;align-items:center;">--}}
 {{--    <h1>Mes pages</h1>--}}
