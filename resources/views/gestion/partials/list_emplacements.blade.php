@@ -29,7 +29,7 @@
 
         <x-searchbar
             search-id="searchEmplacements"
-            target-grid="emplacementsGrid"
+            target-grid="itemsGrid"
             placeholder="Rechercher un emplacement..."
             item-label="emplacements"
             create-route="{{ route('gestion.create', ['type' => 'emplacements']) }}"
@@ -42,7 +42,8 @@
         />
         <div id="resultatsEmplacements" class="resultatsClient"></div>
 
-        <div class="items-grid" id="emplacementsGrid">
+
+        <div class="items-grid" id="itemsGrid">
             <!-- Emplacement -->
             @foreach($emplacements as $emplacement)
                 <div class="item-card theme-articles">
@@ -106,16 +107,7 @@
                         </button>
                     </div>
                 </div>
-                {{--        @empty--}}
-                {{--            <div class="no-results-content">--}}
-                {{--                <div class="no-results-icon">📦</div>--}}
-                {{--                <h3>Aucun emplacement</h3>--}}
-                {{--                <p>Aucun emplacement n'a été créé pour le moment.</p>--}}
-                {{--                <button class="btn btn-primary" data-url="{{ route('gestion.emplacements.create') }}">--}}
-                {{--                    <i data-lucide="plus"></i>--}}
-                {{--                    Créer un emplacement--}}
-                {{--                </button>--}}
-                {{--            </div>--}}
+
             @endforeach
             <!-- Emplacement fin -->
         </div>

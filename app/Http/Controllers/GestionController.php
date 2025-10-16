@@ -218,6 +218,7 @@ class GestionController extends Controller
             'Article_actif' => Article::where('Article_Actif', 1)->count(),
             'champs' => $this->articleModel->getColumnNames(),
             'articles' => Article::paginate(10),
+            'activepage' => 'articles',
             'pager' => $this->articleModel->pager,
             'sessionData' => $this->sessionData
         ];
@@ -239,6 +240,7 @@ class GestionController extends Controller
             'Categories_Count' => CategorieArticle::count(),
             'champs' => $this->categorieArticleModel->getColumnNames(),
             'sessionData' => $this->sessionData,
+            'activepage' => 'categories',
             'pager' => $this->categorieArticleModel->pager,
         ];
         if (request()->ajax()) {
@@ -256,7 +258,8 @@ class GestionController extends Controller
             'fournisseurs' => Fournisseur::paginate(10),
             'champs' => $this->fournisseurModel->getColumnNames(),
             'Fournisseurs_Count' => Fournisseur::count(),
-            'sessionData' => $this->sessionData
+            'sessionData' => $this->sessionData,
+            'activepage' => 'fournisseurs',
         ];
         if (request()->ajax()) {
             return view('gestion.partials.list_fournisseurs', $data);
@@ -270,13 +273,19 @@ class GestionController extends Controller
     public function list_emplacements()
     {
         $data = [
-            'emplacements' => Emplacement::paginate(10),
             'Emplacements_Count' => Emplacement::count(),
+            'Emplacements_actif' => Emplacement::where('Emplacements_actif', 1)->count(),
+            'champs' => $this->emplacementModel->getColumnNames(),
+            'emplacements' => Emplacement::paginate(10),
+            'activepage' => 'emplacements',
+            'pager' => $this->emplacementModel->pager,
             'sessionData' => $this->sessionData
         ];
+
         if (request()->ajax()) {
             return view('gestion.partials.list_emplacements', $data);
         }
+
         return view('gestion.list_emplacements', $data);
     }
 
@@ -287,6 +296,7 @@ class GestionController extends Controller
     {
         $data = [
             // Vos données de mouvements
+            'activepage' => 'mouvements',
             'sessionData' => $this->sessionData
         ];
         if (request()->ajax()) {

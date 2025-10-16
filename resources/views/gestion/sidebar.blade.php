@@ -57,7 +57,7 @@
         $('.nav-menu a').click(function (e) {
             e.preventDefault();
             const action = $(this).data('action');
-            const url = "{{ url('gestion') }}/" + action;  // ✅ Correct : 'gestion'
+            const url = "{{ url('gestion') }}/" + action;
 
             console.log("Action:", action);
             console.log("URL:", url);
