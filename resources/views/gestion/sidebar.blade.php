@@ -1,4 +1,21 @@
 @php
+    $currentPath = request()->path();
+    $activepage = '';
+
+    // Déterminer quelle action est active selon l'URL
+    if (str_contains($currentPath, 'gestion.AM_articles') || str_contains($currentPath, 'gestion.edit.articles')) {
+        $activepage = 'articles';
+    } elseif (str_contains($currentPath, 'gestion/emplacements') || str_contains($currentPath, 'gestion/edit/emplacements')) {
+        $activeAction = 'emplacements';
+    } elseif (str_contains($currentPath, 'gestion/categories') || str_contains($currentPath, 'gestion/edit/categories')) {
+        $activeAction = 'categories';
+    } elseif (str_contains($currentPath, 'gestion/mouvements') || str_contains($currentPath, 'gestion/edit/mouvements')) {
+        $activeAction = 'mouvements';
+    } elseif (str_contains($currentPath, 'gestion/fournisseurs') || str_contains($currentPath, 'gestion/edit/fournisseurs')) {
+        $activeAction = 'fournisseurs';
+    } elseif (str_contains($currentPath, 'gestion') && $currentPath === 'gestion' || str_contains($currentPath, 'gestion/accueil')) {
+        $activeAction = 'accueil';
+    }
     $gestionMenu = [
         [
             'action' => 'accueil',
@@ -38,6 +55,7 @@
         ],
     ];
 @endphp
+
 
 <x-sidebar
     :navigation-items="$gestionMenu"
@@ -106,3 +124,4 @@
         });
     });
 </script>
+

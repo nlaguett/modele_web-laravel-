@@ -74,8 +74,6 @@
     />
 
 
-
-
     <div id="resultatsArticles" class="resultatsClient"></div>
 
     @if(isset($message))

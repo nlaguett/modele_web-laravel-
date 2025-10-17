@@ -389,7 +389,7 @@
 
             <!-- Actions -->
             <div class="form-actions">
-                <a href="{{ route('gestion.articles.1') }}" class="btn btn-secondary">
+                <a href="{{ route('gestion.AM_articles') }}" class="btn btn-secondary">
                     <i data-lucide="x"></i>
                     Annuler
                 </a>

@@ -386,30 +386,17 @@ class GestionController extends Controller
         $data = [
             'item' => null,
             'type' => $type,
+            'activepage' => $type, // Important pour le menu sidebar
             'sessionData' => $this->sessionData
         ];
 
-        return view('main-layout', $data)
-            . view('gestion.sidebar', $data)
-            . view('gestion.forms.' . $type . '_form', $data);
-    }
+        // Si requête AJAX, retourner uniquement le formulaire
+        if (request()->ajax()) {
+            return view('gestion.forms.' . $type . '_form', $data);
+        }
 
-
-
-    public function store(Request $request, $type)
-    {
-        $model = $this->getModel($type);
-        $meta = $this->getEntityMeta($type);
-
-        // Valider les données
-        $validated = $this->validateRequest($request, $type);
-
-        // Créer l'enregistrement
-        $model->insert($validated);
-
-        return redirect()->route('gestion.index')
-            ->with('success', 'Élément modifié avec succès !')
-            ->with('loadSection', 'articles');
+        // Sinon, retourner la vue complète avec le layout
+        return view('gestion.' . $type . '_form', $data);
     }
 
     public function edit($type, $id)
@@ -422,16 +409,47 @@ class GestionController extends Controller
         $primaryKey = $this->getEntityMeta($type)['id'];
 
         $item = $model->where($primaryKey, $id)->firstOrFail();
+
         $data = [
+            'activepage' => $type,
             'item' => $item,
             'type' => $type,
             'sessionData' => $this->sessionData
         ];
 
-        return view('main-layout' ) .
-            view('gestion.forms.' . $type . '_form', $data) .
-            view('gestion.sidebar');
+        // Si requête AJAX, retourner uniquement le formulaire
+        if (request()->ajax()) {
+            return view('gestion.forms.' . $type . '_form', $data);
+        }
 
+        // Sinon, retourner la vue complète avec le layout
+        return view('gestion.' . $type . '_form', $data);
+    }
+
+    public function store(Request $request, $type)
+    {
+        $model = $this->getModel($type);
+        $meta = $this->getEntityMeta($type);
+
+        // Valider les données
+        $validated = $this->validateRequest($request, $type);
+
+        // Créer l'enregistrement
+        $item = $model->create($validated);
+
+        // Si requête AJAX, retourner JSON
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Élément créé avec succès !',
+                'item' => $item,
+                'redirect' => route('gestion.AM_' . $type)
+            ]);
+        }
+
+        // Sinon, redirection classique
+        return redirect()->route('gestion.AM_' . $type)
+            ->with('success', 'Élément créé avec succès !');
     }
 
     public function update(Request $request, $type, $id)
@@ -446,8 +464,18 @@ class GestionController extends Controller
         $primaryKey = $meta['id'];
 
         // Mettre à jour l'enregistrement
-        $model->where($primaryKey, $id)->update($validated);
+        $updated = $model->where($primaryKey, $id)->update($validated);
 
+        // Si requête AJAX, retourner JSON
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Élément modifié avec succès !',
+                'redirect' => route('gestion.AM_' . $type)
+            ]);
+        }
+
+        // Sinon, redirection classique
         return redirect()->route('gestion.AM_' . $type)
             ->with('success', 'Élément modifié avec succès !');
     }
@@ -463,7 +491,16 @@ class GestionController extends Controller
         // Supprimer l'enregistrement
         $model->where($primaryKey, $id)->delete();
 
-        return redirect()->route('gestion.list_' . $type)
+        // Si requête AJAX, retourner JSON
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Élément supprimé avec succès !'
+            ]);
+        }
+
+        // Sinon, redirection classique
+        return redirect()->route('gestion.AM_' . $type)
             ->with('success', 'Élément supprimé avec succès !');
     }
 
