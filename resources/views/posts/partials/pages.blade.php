@@ -86,120 +86,69 @@
                 </div>
             </div>
 
-            <!-- Page Item 2 -->
-            <div class="page-item">
-                <input type="checkbox" class="page-checkbox">
-                <div class="page-info">
-                    <div class="page-title">
-                        À propos de nous
-                        <span class="status-badge status-published">Publié</span>
-                    </div>
-                    <div class="page-meta">
-                        <span>👤 Par Sophie Martin</span>
-                        <span>📅 Modifié le 07/10/2025</span>
-                        <span>👁️ 892 vues</span>
-                        <span>🌐 /about</span>
-                    </div>
-                </div>
-                <div class="page-actions">
-                    <button class="btn-icon view" title="Prévisualiser">👁️</button>
-                    <button class="btn-icon edit" title="Modifier">✏️</button>
-                    <button class="btn-icon duplicate" title="Dupliquer">📋</button>
-                    <button class="btn-icon delete" title="Supprimer">🗑️</button>
-                </div>
-            </div>
+            <div class="list"></div>
 
-            <!-- Page Item 3 -->
             <div class="page-item">
                 <input type="checkbox" class="page-checkbox">
                 <div class="page-info">
-                    <div class="page-title">
-                        Services - Nouvelles offres
-                        <span class="status-badge status-draft">Brouillon</span>
-                    </div>
-                    <div class="page-meta">
-                        <span>👤 Par Jean Dupont</span>
-                        <span>📅 Modifié le 06/10/2025</span>
-                        <span>👁️ 0 vues</span>
-                        <span>🌐 /services</span>
-                    </div>
-                </div>
-                <div class="page-actions">
-                    <button class="btn-icon view" title="Prévisualiser">👁️</button>
-                    <button class="btn-icon edit" title="Modifier">✏️</button>
-                    <button class="btn-icon duplicate" title="Dupliquer">📋</button>
-                    <button class="btn-icon delete" title="Supprimer">🗑️</button>
-                </div>
-            </div>
-
-            <!-- Page Item 4 -->
-            <div class="page-item">
-                <input type="checkbox" class="page-checkbox">
-                <div class="page-info">
-                    <div class="page-title">
-                        Contact
-                        <span class="status-badge status-published">Publié</span>
-                    </div>
+                    <span class="page-title">Header</span>
                     <div class="page-meta">
                         <span>👤 Par Admin</span>
-                        <span>📅 Modifié le 05/10/2025</span>
-                        <span>👁️ 567 vues</span>
-                        <span>🌐 /contact</span>
+                        <span>📅 Modifié le 08/10/2025</span>
+                        <span>👁️ 1,234 vues</span>
+                        <span>🌐 /accueil</span>
                     </div>
                 </div>
                 <div class="page-actions">
-                    <button class="btn-icon view" title="Prévisualiser">👁️</button>
-                    <button class="btn-icon edit" title="Modifier">✏️</button>
-                    <button class="btn-icon duplicate" title="Dupliquer">📋</button>
-                    <button class="btn-icon delete" title="Supprimer">🗑️</button>
+                    <a href="{{ url('header') }}"><button class="btn-icon view">👁️</button></a>
+                    <a href="{{ route('posts.update', 'header') }}"><button class="btn-icon edit">✏️</button></a>
                 </div>
             </div>
 
-            <!-- Page Item 5 -->
             <div class="page-item">
                 <input type="checkbox" class="page-checkbox">
                 <div class="page-info">
-                    <div class="page-title">
-                        Blog - Article 1
-                        <span class="status-badge status-draft">Brouillon</span>
-                    </div>
+                    <span class="page-title">Footer</span>
                     <div class="page-meta">
-                        <span>👤 Par Marie Laurent</span>
-                        <span>📅 Modifié le 04/10/2025</span>
-                        <span>👁️ 12 vues</span>
-                        <span>🌐 /blog/article-1</span>
+                        <span>👤 Par Admin</span>
+                        <span>📅 Modifié le 08/10/2025</span>
+                        <span>👁️ 1,234 vues</span>
+                        <span>🌐 /accueil</span>
                     </div>
                 </div>
                 <div class="page-actions">
-                    <button class="btn-icon view" title="Prévisualiser">👁️</button>
-                    <button class="btn-icon edit" title="Modifier">✏️</button>
-                    <button class="btn-icon duplicate" title="Dupliquer">📋</button>
-                    <button class="btn-icon delete" title="Supprimer">🗑️</button>
+                    <a href="{{ url('footer') }}"><button class="btn-icon view">👁️</button></a>
+                    <a href="{{ route('posts.update', 'footer') }}"><button class="btn-icon edit">✏️</button></a>
                 </div>
             </div>
 
-            <!-- Page Item 6 -->
-            <div class="page-item">
-                <input type="checkbox" class="page-checkbox">
-                <div class="page-info">
-                    <div class="page-title">
-                        FAQ - Questions fréquentes
-                        <span class="status-badge status-published">Publié</span>
+            @foreach ($posts as $post)
+                <div class="page-item">
+                    <input type="checkbox" class="page-checkbox">
+                    <div class="page-info">
+                        <span class="page-title">{{ $post->title }}</span>
+
+                        <div class="page-meta">
+                            <span>👤 Par Admin</span>
+                            <span>📅 Modifié le 08/10/2025</span>
+                            <span>👁️ 1,234 vues</span>
+                            <span>🌐 /accueil</span>
+                        </div>
                     </div>
-                    <div class="page-meta">
-                        <span>👤 Par Sophie Martin</span>
-                        <span>📅 Modifié le 03/10/2025</span>
-                        <span>👁️ 1,045 vues</span>
-                        <span>🌐 /faq</span>
+                    <div class="page-actions">
+                        <a href="{{ url($post->slug) }}"><button class="btn-icon view">👁️</button></a>
+                        <a href="{{ route('posts.update', $post->id) }}"><button class="btn-icon edit">✏️</button></a>
+                        <a href="{{ route('posts.destroy', $post->id) }}"><button class="btn-icon delete">🗑️</button></a>
                     </div>
                 </div>
-                <div class="page-actions">
-                    <button class="btn-icon view" title="Prévisualiser">👁️</button>
-                    <button class="btn-icon edit" title="Modifier">✏️</button>
-                    <button class="btn-icon duplicate" title="Dupliquer">📋</button>
-                    <button class="btn-icon delete" title="Supprimer">🗑️</button>
-                </div>
-            </div>
+            @endforeach
+
+{{--            <div class="list-item">--}}
+{{--                <span>&nbsp;</span>--}}
+{{--                <div>--}}
+{{--                    <a href="{{ route('posts.create') }}"><button class="btn-icon">➕</button></a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
 
             {{--        PAGINATION A AJOUTER--}}
             {{--        <x-pagination-item :items="$posts" />--}}

@@ -11,65 +11,73 @@ class PostModel extends Model
 
     // ✅ Même chose
     protected $table = 'posts';
+    protected $primaryKey = 'id';
 
-    // ✅ Laravel utilise 'id' par défaut, pas besoin de le spécifier
-    // protected $primaryKey = 'id';
-
-    // ⚠️ DIFFÉRENT : Laravel utilise $fillable au lieu de $allowedFields
+    // $fillable remplace $allowedFields
     protected $fillable = [
         'title',
         'slug',
         'content',
-        'author_id'  // ou 'user_id' selon votre convention
+        'author_id'
     ];
 
-    // ✅ Même chose - Laravel utilise aussi $timestamps (true par défaut)
-    // public $timestamps = true;
+    // $timestamps = true est activé par défaut dans Laravel
+    public $timestamps = true;
 
     /**
-     * Relation avec l'utilisateur/auteur
+     * Récupérer tous les posts
      */
-    public function author()
+    public static function getPosts()
     {
-        return $this->belongsTo(User::class, 'author_id');
+        return self::all();
     }
 
     /**
-     * ❌ INUTILE en Laravel - déjà disponible avec Post::all()
-     * public function getPosts() { return $this->findAll(); }
+     * Récupérer un post par ID
      */
-
-    /**
-     * ❌ INUTILE - déjà disponible avec Post::find($id)
-     * public function getPost($id) { return $this->find($id); }
-     */
-
-    /**
-     * ❌ INUTILE - déjà disponible avec Post::create($data)
-     * public function createPost($data) { return $this->insert($data); }
-     */
-
-    /**
-     * ❌ INUTILE - déjà disponible avec $post->update($data)
-     * public function updatePost($id, $data) { return $this->update($id, $data); }
-     */
-
-    /**
-     * ❌ INUTILE - déjà disponible avec $post->delete()
-     * public function deletePost($id) { return $this->delete($id); }
-     */
-
-    /**
-     * ✅ REMPLACER la requête SQL brute par un scope ou une méthode statique
-     */
-    public static function findBySlug($slug)
+    public static function getPost($id)
     {
-        return static::where('slug', $slug)->first();
+        return self::find($id);
     }
 
-    // Ou en tant que scope (préférable)
-    public function scopeBySlug($query, $slug)
+    /**
+     * Créer un nouveau post
+     */
+    public static function createPost($data)
     {
-        return $query->where('slug', $slug);
+        return self::create($data);
+    }
+
+    /**
+     * Mettre à jour un post
+     */
+    public static function updatePost($id, $data)
+    {
+        $post = self::find($id);
+        if ($post) {
+            $post->update($data);
+            return $post;
+        }
+        return false;
+    }
+
+    /**
+     * Supprimer un post
+     */
+    public static function deletePost($id)
+    {
+        $post = self::find($id);
+        if ($post) {
+            return $post->delete();
+        }
+        return false;
+    }
+
+    /**
+     * Récupérer un post par son slug
+     */
+    public static function getSlug($slug)
+    {
+        return self::where('slug', $slug)->first();
     }
 }
