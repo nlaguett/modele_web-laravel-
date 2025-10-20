@@ -12,6 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Ensure jQuery is loaded -->
 
     {{-- Styles principaux --}}
+    <link rel="stylesheet" href="{{ asset('ressources/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_mainGestion.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_mobile.css') }}">
@@ -37,6 +38,7 @@
 
 {{-- Scripts supplémentaires par page --}}
 @stack('scripts')
+
 </body>
 </html>
 
