@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_mainPosts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style/style_main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style/style_mainGestion.css') }}"
+    <link rel="stylesheet" href="{{ asset('css/style/style_mainGestion.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
