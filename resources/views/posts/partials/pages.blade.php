@@ -100,11 +100,12 @@
                     </div>
                 </div>
                 <div class="page-actions">
-                    <a href="{{ url('header') }}"><button class="btn-icon view">👁️</button></a>
-                    <a href="{{ route('posts.update', 'header') }}"><button class="btn-icon edit">✏️</button></a>
+                    <a href="{{ route('posts.checkview', 'header') }}"><button class="btn-icon view">👁️</button></a>
+                    <a href="{{ route('posts.edit', 'header') }}"><button class="btn-icon edit">✏️</button></a>
                 </div>
             </div>
 
+            {{-- Footer --}}
             <div class="page-item">
                 <input type="checkbox" class="page-checkbox">
                 <div class="page-info">
@@ -117,28 +118,37 @@
                     </div>
                 </div>
                 <div class="page-actions">
-                    <a href="{{ url('footer') }}"><button class="btn-icon view">👁️</button></a>
-                    <a href="{{ route('posts.update', 'footer') }}"><button class="btn-icon edit">✏️</button></a>
+                    <a href="{{ route('posts.checkview', 'footer') }}"><button class="btn-icon view">👁️</button></a>
+                    <a href="{{ route('posts.edit', 'footer') }}"><button class="btn-icon edit">✏️</button></a>
                 </div>
             </div>
 
+            {{-- Posts dynamiques --}}
             @foreach ($posts as $post)
                 <div class="page-item">
                     <input type="checkbox" class="page-checkbox">
                     <div class="page-info">
                         <span class="page-title">{{ $post->title }}</span>
-
                         <div class="page-meta">
                             <span>👤 Par Admin</span>
-                            <span>📅 Modifié le 08/10/2025</span>
-                            <span>👁️ 1,234 vues</span>
-                            <span>🌐 /accueil</span>
+                            <span>📅 Modifié le {{ $post->updated_at->format('d/m/Y') }}</span>
+                            <span>👁️ {{ number_format($post->views ?? 0) }} vues</span>
+                            <span>🌐 /{{ $post->slug }}</span>
                         </div>
                     </div>
                     <div class="page-actions">
-                        <a href="{{ url($post->slug) }}"><button class="btn-icon view">👁️</button></a>
-                        <a href="{{ route('posts.update', $post->id) }}"><button class="btn-icon edit">✏️</button></a>
-                        <a href="{{ route('posts.destroy', $post->id) }}"><button class="btn-icon delete">🗑️</button></a>
+                        <a href="{{ route('posts.checkview', $post->slug) }}">
+                            <button class="btn-icon view">👁️</button>
+                        </a>
+                        <a href="{{ route('posts.edit', $post->id) }}">
+                            <button class="btn-icon edit">✏️</button>
+                        </a>
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display: inline;"
+                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette page ?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-icon delete">🗑️</button>
+                        </form>
                     </div>
                 </div>
             @endforeach

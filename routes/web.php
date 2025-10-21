@@ -156,9 +156,19 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
 
                 // MODIFICATIONS DES POSTS
                 Route::get('/create', [PostsController::class, 'create'])->name('create');
+                Route::post('/', [PostsController::class, 'store'])->name('store'); // ✅ AJOUTER
                 Route::get('/edit/{id}', [PostsController::class, 'edit'])->name('edit');
                 Route::put('/{id}', [PostsController::class, 'update'])->name('update');
                 Route::delete('/{id}', [PostsController::class, 'destroy'])->name('destroy');
+
+                // VISUALISATION
+                Route::get('/view/{id}', [PostsController::class, 'view'])->name('view'); // ✅ AJOUTER
+
+                // AJAX
+                Route::post('/save-modification', [PostsController::class, 'saveModification'])->name('saveModification'); // ✅ CORRIGER (enlever /posts/)
+
+                // IMPORTANT : Cette route doit être EN DERNIER car {slug} attrape tout
+                Route::get('/{slug}', [PostsController::class, 'checkview'])->name('checkview'); // ✅ AJOUTER EN DERNIER
         });
 
         // ========================================

@@ -204,6 +204,9 @@ class GestionController extends Controller
             'count_clients' => Client::count(),
         ];
 
+        if (request()->ajax()) {
+            return view('gestion.partials.index', $data);
+        }
         return view('gestion.index', $data);
     }
 

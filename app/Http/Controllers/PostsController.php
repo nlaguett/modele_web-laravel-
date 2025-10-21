@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\PostModel as Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Carbon\Carbon; use Illuminate\Http\JsonResponse;
+
 use Illuminate\Support\Facades\Log;
 
 class PostsController extends Controller
@@ -274,6 +275,32 @@ class PostsController extends Controller
 
         return redirect()->route('posts.index')
             ->with('success', 'Post supprimé avec succès');
+    }
+
+    public function saveModification(Request $request): JsonResponse
+    {
+        // Validation des données
+        $validated = $request->validate([
+            'id' => 'required|integer|exists:posts,id',
+            'content' => 'required|string'
+        ]);
+
+        try {
+            // Récupérer le post et mettre à jour
+            $post = Post::findOrFail($validated['id']);
+            $post->update(['content' => $validated['content']]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Modification enregistrée avec succès'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de la mise à jour'
+            ], 500);
+        }
     }
 
     /**

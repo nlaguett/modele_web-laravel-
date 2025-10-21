@@ -1,3 +1,7 @@
+@php
+// Code toujours en Codeigniter.
+@endphp
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" dir="ltr">
 <head>
@@ -5,25 +9,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>modele</title>
- 
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="<?= site_url('style/style_main.css'); ?>">
-    <link rel="stylesheet" href="<?= site_url('style/style_mobile.css'); ?>">  
-    
-  
-    <?php 
+    <link rel="stylesheet" href="<?= site_url('style/style_mobile.css'); ?>">
+
+
+    <?php
         if (isset($clients)){
             echo '<link rel="stylesheet" href="'.site_url('style/style_mainClient.css').'">';
         }
     ?>
-   
-    <?php 
+
+    <?php
         if (isset($societe)){
             echo '<link rel="stylesheet" href="'.site_url('style/style_mainSociete.css').'">';
         }
     ?>
-    
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
