@@ -62,18 +62,18 @@
     <h2>Ma page : {{ ($post['title']) }}</h2>
 
     <!-- Zone pour les contrôles globaux, comme "Ajouter un bloc" en haut ou en bas -->
-    <div class="contenu">
-        <button class="btn" onclick="openAddBlockModal(null)">Ajouter un bloc au début</button>
+    <div class="item-actions">
+        <button class="btn-outline btn-sm" onclick="openAddBlockModal(null)">Ajouter un bloc </button>
     </div>
 
     <div id="container" class="contenu" data-id="{{ $post['id'] }}">
-        <!-- Les blocs existants seront chargés ici par JS ou Blade si $post->content est déjà structuré -->
-        @if (isset($post['content_blocks']) && is_array($post['content_blocks']))
+        @if (!empty($post['content_blocks']))
+            {{-- Si content_blocks est déjà structuré, utilisez-le --}}
             @foreach ($post['content_blocks'] as $block)
                 {!! generateBlockHtml($block) !!}
             @endforeach
         @else
-            <!-- Si le contenu n'est pas encore structuré en blocs, on peut le traiter comme un seul bloc de texte initial -->
+            {{-- Sinon, créez un bloc de texte initial avec l'ancien 'content' --}}
             <div class="cms-block block-text" data-type="text" data-id="block-{{ uniqid() }}">
                 <div class="block-controls">
                     <button onclick="moveBlock(this.closest('.cms-block'), 'up')">⬆️</button>
@@ -81,16 +81,18 @@
                     <button onclick="openBlockSettings(this.closest('.cms-block'))">⚙️</button>
                     <button onclick="removeBlock(this.closest('.cms-block'))">🗑️</button>
                 </div>
-                <p class="editable" contenteditable="true">{{ $post['content'] }}</p>
+                {{-- Utilisez 'content' ici pour le premier chargement --}}
+                <p class="editable" contenteditable="true">{!! $post['content'] !!}</p>
             </div>
         @endif
     </div>
 
-    <div class="contenu">
-        <button class="add-block-btn" onclick="openAddBlockModal(null)">Ajouter un bloc à la fin</button>
-        <button id="saveBtn" class="btn" onclick="saveAllModifications()">Enregistrer toutes les modifications</button>
+    <div class="item-actions">
+        <button class="btn-outline btn-sm" onclick="openAddBlockModal(null)">Ajouter un bloc</button>
     </div>
+
 </div>
+
 
 <!-- Modale pour ajouter un nouveau bloc -->
 <div id="addBlockModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:100;">

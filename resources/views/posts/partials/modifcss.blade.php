@@ -15,15 +15,7 @@
         outline: none;
     }
 
-    .btn {
-        padding: 8px 12px;
-        background: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        margin-right: 5px; /* Pour espacer les boutons */
-    }
+
 
     .btn:disabled {
         background: #ccc;

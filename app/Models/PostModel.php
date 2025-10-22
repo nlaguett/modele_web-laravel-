@@ -12,18 +12,18 @@ class PostModel extends Model
     protected $table = 'posts';
     protected $primaryKey = 'id';
 
-    // Add the new fields to $fillable
     protected $fillable = [
         'title',
         'slug',
         'content',
+        'content_blocks',
         'author_id',
-        'status', // New
-        'template', // New
-        'featured_image', // New
-        'meta_title', // New
-        'meta_description', // New
-        'views', // New
+        'status',
+        'template',
+        'featured_image',
+        'meta_title',
+        'meta_description',
+        'views',
     ];
 
     public $timestamps = true;

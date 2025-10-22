@@ -356,4 +356,52 @@ class PostsController extends Controller
             ], 500);
         }
     }
+
+    function generateBlockHtml($block) {
+        $html = '';
+        $blockId = $block['id'] ?? 'block-' . uniqid();
+        $blockType = $block['type'] ?? 'text';
+        $blockClasses = $block['classes'] ?? '';
+        $blockStyles = $block['styles'] ?? '';
+        $content = $block['content'] ?? '';
+
+        $html .= "<div class='cms-block block-{$blockType} {$blockClasses}' data-type='{$blockType}' data-id='{$blockId}' style='{$blockStyles}' draggable='true'>";
+        $html .= "<div class='block-controls'>";
+        $html .= "<button onclick='moveBlock(this.closest(\".cms-block\"), \"up\")'>⬆️</button>";
+        $html .= "<button onclick='moveBlock(this.closest(\".cms-block\"), \"down\")'>⬇️</button>";
+        $html .= "<button onclick='openBlockSettings(this.closest(\".cms-block\"))'>⚙️</button>";
+        $html .= "<button onclick='removeBlock(this.closest(\".cms-block\"))'>🗑️</button>";
+        $html .= "</div>";
+
+        switch ($blockType) {
+            case 'text':
+                $html .= "<p class='editable' contenteditable='true'>{$content}</p>";
+                break;
+            case 'heading':
+                $html .= "<h2 class='editable' contenteditable='true'>{$content}</h2>";
+                break;
+            case 'image':
+                $imageUrl = $block['url'] ?? 'https://via.placeholder.com/400x200?text=Image';
+                $html .= "<img src='{$imageUrl}' alt='Image'>";
+                break;
+            case 'container':
+                $html .= "<div class='block-container'>";
+                // Si le conteneur a des enfants, vous devrez les générer ici récursivement
+                if (isset($block['children']) && is_array($block['children'])) {
+                    foreach ($block['children'] as $childBlock) {
+                        $html .= generateBlockHtml($childBlock);
+                    }
+                }
+                // Bouton pour ajouter des blocs à l'intérieur du conteneur
+                $html .= "<button class='add-block-btn' onclick='event.stopPropagation(); openAddBlockModal(this.closest(\".cms-block\"))'>+ Ajouter</button>";
+                $html .= "</div>";
+                break;
+            default:
+                $html .= "<div class='editable' contenteditable='true'>Contenu du bloc inconnu</div>";
+                break;
+        }
+
+        $html .= "</div>";
+        return $html;
+    }
 }

@@ -37,14 +37,15 @@
         <div class="admin-bar-left">
             <a href="{{ route('posts.pages') }}" class="admin-link">📄 Pages</a>
             <a href="{{ route('posts.create') }}" class="admin-link">➕ Nouveau</a>
-
+            <a id="saveBtn" class="admin-link" onclick="saveAllModifications()">Enregistrer</a>
             @if(isset($post) && $post)
-                <a href="?action=edit" class="admin-link edit-btn">✏️ Modifier</a>
+                <a href="?action=edit" class="admin-link">✏️ Modifier</a>
             @endif
         </div>
         <div class="admin-bar-right">
 
         </div>
+
     </div>
 
     @endif
