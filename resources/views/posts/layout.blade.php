@@ -29,6 +29,26 @@
 <!-- Header -->
 @include('header', $sessionData ?? [])
 
+@auth
+    @if(auth()->user()->role === 'admin')
+
+    {{-- Admin Bar WordPress-style --}}
+    <div class="wp-admin-bar">
+        <div class="admin-bar-left">
+            <a href="{{ route('posts.pages') }}" class="admin-link">📄 Pages</a>
+            <a href="{{ route('posts.create') }}" class="admin-link">➕ Nouveau</a>
+
+            @if(isset($post) && $post)
+                <a href="?action=edit" class="admin-link edit-btn">✏️ Modifier</a>
+            @endif
+        </div>
+        <div class="admin-bar-right">
+
+        </div>
+    </div>
+
+    @endif
+@endauth
 <div class="container-fluid">
     <div class="row">
         <!-- SIDEBAR -->

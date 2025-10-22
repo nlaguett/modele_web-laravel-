@@ -6,20 +6,32 @@
      * Pour le renvoyer dans ces fichier layout il faut faire @include('header')
      */
 @endphp
-
 {{-- resources/views/header.blade.php --}}
-<header class="header">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Ensure jQuery is loaded -->
 
+
+
+{{-- Votre header existant --}}
+<header class="header">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <div class="user-info">
         <span>Bonjour : {{ $sessionData['prenom'] ?? '' }}&nbsp;{{ $sessionData['nom'] ?? '' }}</span>
-        &nbsp;&nbsp;&nbsp;<span></span>
     </div>
-    <a href="{{ route('dashboard') }}" class="navigation">
-        <button class="logout-btn">Retour</button>
-    </a>&nbsp;&nbsp;&nbsp;
-    <a href="{{ route('admin.deconnexion') }}" class="navigation">
-        <button class="logout-btn">Déconnexion</button>
-    </a>
+    <div class="right-header">
+
+        <a href="{{ route('dashboard') }}" class="navigation">
+            <button class="logout-btn">Retour</button>
+        </a>&nbsp;&nbsp;&nbsp;
+
+        <a href="{{ route('admin.deconnexion') }}" class="navigation">
+            <button class="logout-btn">Déconnexion</button>
+        </a>
+    </div>
+
 </header>
+
+<style>
+
+
+
+</style>

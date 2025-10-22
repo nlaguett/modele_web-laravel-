@@ -1,20 +1,3 @@
-@php
-    /*
-      *    <div class="bulk-actions">
-                    <select class="btn btn-secondary" style="padding: 10px 20px;">
-                        <option>Actions groupées</option>
-                        <option>Publier</option>
-                        <option>Mettre en brouillon</option>
-                        <option>Archiver</option>
-                        <option>Supprimer</option>
-                    </select>
-                </div>
-
-        Afficher ce button " Actions groupées" a la place du button "Ajouter un article"
-        a côté de la searchbar.
-      */
-@endphp
-
 <body>
 
 <div class="main-content">
@@ -214,4 +197,3 @@
     });
 </script>
 </body>
-

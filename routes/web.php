@@ -143,7 +143,7 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
          * Si il est admin, lui autoriser l'accès, sinon lui refuser et le renvoyer sur la page d'accueil Dashboard.index
          */
         Route::prefix('posts')->name('posts.')->group(function () {
-
+            Route::middleware(['auth'])->group(function () {
                 // Routes de base pour les posts
                 Route::get('/', [PostsController::class, 'index'])->name('index');
                 Route::get('/accueil', [PostsController::class, 'index'])->name('accueil');
@@ -156,20 +156,23 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
 
                 // MODIFICATIONS DES POSTS
                 Route::get('/create', [PostsController::class, 'create'])->name('create');
-                Route::post('/', [PostsController::class, 'store'])->name('store'); // ✅ AJOUTER
+                Route::post('/', [PostsController::class, 'store'])->name('store');
                 Route::get('/edit/{id}', [PostsController::class, 'edit'])->name('edit');
                 Route::put('/{id}', [PostsController::class, 'update'])->name('update');
                 Route::delete('/{id}', [PostsController::class, 'destroy'])->name('destroy');
+                Route::post('/save-all-modifications', [PostsController::class, 'saveAllModifications'])->name('save-all-modifications');
 
                 // VISUALISATION
-                Route::get('/view/{id}', [PostsController::class, 'view'])->name('view'); // ✅ AJOUTER
+                Route::get('/view/{id}', [PostsController::class, 'view'])->name('view');
 
                 // AJAX
-                Route::post('/save-modification', [PostsController::class, 'saveModification'])->name('saveModification'); // ✅ CORRIGER (enlever /posts/)
+                Route::post('/save-modification', [PostsController::class, 'saveModification'])->name('saveModification');
 
                 // IMPORTANT : Cette route doit être EN DERNIER car {slug} attrape tout
-                Route::get('/{slug}', [PostsController::class, 'checkview'])->name('checkview'); // ✅ AJOUTER EN DERNIER
-        });
+                Route::get('/{slug}', [PostsController::class, 'checkview'])->name('checkview');
+
+            });
+                        });
 
         // ========================================
         //              Statistiques

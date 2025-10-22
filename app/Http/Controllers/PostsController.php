@@ -303,9 +303,57 @@ class PostsController extends Controller
         }
     }
 
+    public function show(Request $request, $slug)
+    {
+        // Chercher la page dans la BDD
+        $post = Post::where('slug', $slug)->firstOrFail();
+
+        // 🔍 DÉTECTION DU MODE ÉDITION
+        if ($request->get('action') === 'edit') {
+            // Vérifier si l'utilisateur est admin
+            if (!auth()->check() || auth()->user()->role !== 'admin') {
+                abort(403, 'Accès refusé');
+            }
+
+            // Afficher l'éditeur
+            $sessionData = $this->getSessionData();
+            return view('posts.modif', compact('post', 'sessionData'));
+        }
+
+        // 👁️ AFFICHAGE PUBLIC NORMAL
+        if (empty($post->content)) {
+            abort(404, 'Contenu non disponible');
+        }
+
+        return view('posts.view', compact('post'));
+    }
     /**
      * Sauvegarde toutes les modifications (AJAX)
      */
+    public function saveAllModifications(Request $request): JsonResponse
+    {
+        // Validation Laravel native
+        $validated = $request->validate([
+            'modifications.id' => 'required|integer|exists:posts,id',
+            'modifications.content' => 'required|string'
+        ]);
 
+        try {
+            $post = Post::findOrFail($validated['modifications']['id']);
+            $post->update(['content' => $validated['modifications']['content']]);
 
+            return response()->json([
+                'success' => true,
+                'message' => 'Modifications enregistrées avec succès'
+            ]);
+
+        } catch (\Exception $e) {
+            \Log::error('Erreur sauvegarde : ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de l\'enregistrement'
+            ], 500);
+        }
+    }
 }
