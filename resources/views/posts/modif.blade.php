@@ -1,7 +1,7 @@
-@extends('posts.layout')
+@extends('posts.CMS.layout')
 
 
 @section('content')
-    @include('posts.partials.modifcss')
-    @include('posts.partials.modif')
+    @include('posts.CMS.partials.modifcss')
+    @include('posts.CMS.partials.modif')
 @endsection

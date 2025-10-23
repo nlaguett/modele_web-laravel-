@@ -1,60 +1,4 @@
-<style>
 
-    .editable {
-        padding: 10px;
-        border: 1px solid #ccc;
-        cursor: pointer;
-        background: white;
-        border-radius: 5px;
-        user-select: none;
-    }
-
-    .editable[contenteditable="true"] {
-        border: 1px solid blue;
-        outline: none;
-    }
-
-    .btn {
-        padding: 8px 12px;
-        background: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .btn:disabled {
-        background: #ccc;
-    }
-
-    /* Style pour le drag & drop */
-    .dragging {
-        opacity: 0.5;
-    }
-
-    .blocAmodifier{
-        width:100%;
-        display:flex;
-        flex-direction:column;
-        align-content:center;
-        justify-content:center;
-        align-items:center;
-        border-radius: 8px;
-    }
-    .contenu{
-        width:800px;
-        border: 1px solid #ddd;
-        display:flex;
-        background-color:whitesmoke;
-        flex-direction:column;
-        padding:10px;
-        border-radius:8px;
-        margin:3px;
-    }
-    .MainBloc{
-        display :flex;
-    }
-</style>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="blocAmodifier">
@@ -96,7 +40,7 @@
 
 <!-- Modale pour ajouter un nouveau bloc -->
 <div id="addBlockModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:100;">
-    <div style="background:white; margin:10% auto; padding:20px; width:500px; border-radius:8px;">
+    <div style="background:white; gap:10px ;margin:10% auto; padding:20px; width:500px; border-radius:8px;">
         <h3>Quel type de bloc voulez-vous ajouter ?</h3>
         <button class="btn" onclick="addBlock('text')">Texte (Paragraphe)</button>
         <button class="btn" onclick="addBlock('heading')">Titre (H2)</button>

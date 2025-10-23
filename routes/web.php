@@ -164,6 +164,7 @@ Route::middleware('auth' , 'session.timeout')->group(function () {
 
                 // VISUALISATION
                 Route::get('/view/{id}', [PostsController::class, 'view'])->name('view');
+                Route::get('/show/{id}', [PostsController::class, 'show'])->name('show');
 
                 // AJAX
                 Route::post('/save-modification', [PostsController::class, 'saveModification'])->name('saveModification');
