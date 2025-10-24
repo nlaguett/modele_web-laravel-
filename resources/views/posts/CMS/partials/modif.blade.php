@@ -1,4 +1,3 @@
-
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div class="blocAmodifier">
@@ -303,90 +302,90 @@
         // Exemple : coller une URL directement pour tester
         // document.getElementById('imageUrl').value = 'https://picsum.photos/600/300';
     }
-
-
-    // Drag & Drop : Réorganisation des blocs
-    function enableDragAndDrop(block) {
-        block.addEventListener("dragstart", function (e) {
-            e.stopPropagation(); // Important pour ne pas intercepter le drag du parent si c'est un conteneur
-            e.dataTransfer.setData("text/plain", this.dataset.id);
-            this.classList.add("dragging");
-            // Ajoute une classe à tous les conteneurs pour les rendre des "dropzones" visuellement
-            document.querySelectorAll('.cms-block.block-container, #container').forEach(c => {
-                c.classList.add('dropzone-active');
-            });
-        });
-
-        block.addEventListener("dragend", function () {
-            this.classList.remove("dragging");
-            document.querySelectorAll('.dropzone-active').forEach(c => {
-                c.classList.remove('dropzone-active');
-            });
-        });
-
-        // Gestion du dragover et drop pour le conteneur principal et les blocs conteneurs
-        block.addEventListener("dragover", handleDragOver);
-        block.addEventListener("drop", handleDrop);
-    }
-
-    // Gestionnaire de dragover générique
-    function handleDragOver(e) {
-        e.preventDefault(); // Nécessaire pour permettre le drop
-        e.stopPropagation(); // Empêche l'événement de se propager au parent
-        if (this.classList.contains('cms-block') || this.id === 'container') { // Seulement sur les blocs ou le conteneur principal
-            this.classList.add('drag-over'); // Feedback visuel
-        }
-    }
-
-    // Gestionnaire de drop générique
-    function handleDrop(e) {
-        e.preventDefault();
-        e.stopPropagation(); // Empêche l'événement de se propager
-
-        this.classList.remove('drag-over'); // Supprime le feedback visuel
-
-        const blockId = e.dataTransfer.getData("text/plain");
-        const draggingBlock = document.querySelector(`.cms-block[data-id="${blockId}"]`);
-
-        if (!draggingBlock || draggingBlock === this) return; // Ne rien faire si on glisse sur soi-même
-
-        let targetContainer = this; // Le conteneur où on veut lâcher
-
-        // Si on lâche sur un bloc normal, on veut le mettre à côté de lui, pas dedans
-        if (targetContainer.classList.contains('cms-block') && !targetContainer.classList.contains('block-container')) {
-            targetContainer = targetContainer.parentNode; // Le parent du bloc cible
-        }
-        // Si on lâche sur un conteneur qui est aussi un bloc, il devient la cible
-        else if (this.classList.contains('block-container')) {
-            targetContainer = this;
-        }
-
-
-        const afterElement = getDragAfterElement(targetContainer, e.clientY);
-
-        if (afterElement == null) {
-            targetContainer.appendChild(draggingBlock);
-        } else {
-            targetContainer.insertBefore(draggingBlock, afterElement);
-        }
-        saveBtn.disabled = false;
-    }
-
-
-    function getDragAfterElement(parentContainer, y) {
-        // Sélectionnez seulement les éléments qui sont des enfants directs et des blocs
-        let elements = [...parentContainer.querySelectorAll(":scope > .cms-block:not(.dragging)")];
-
-        return elements.reduce((closest, child) => {
-            const box = child.getBoundingClientRect();
-            const offset = y - box.top - box.height / 2;
-            if (offset < 0 && offset > closest.offset) {
-                return { offset: offset, element: child };
-            } else {
-                return closest;
-            }
-        }, { offset: Number.NEGATIVE_INFINITY }).element;
-    }
+    //
+    //
+    // // Drag & Drop : Réorganisation des blocs
+    // function enableDragAndDrop(block) {
+    //     block.addEventListener("dragstart", function (e) {
+    //         e.stopPropagation(); // Important pour ne pas intercepter le drag du parent si c'est un conteneur
+    //         e.dataTransfer.setData("text/plain", this.dataset.id);
+    //         this.classList.add("dragging");
+    //         // Ajoute une classe à tous les conteneurs pour les rendre des "dropzones" visuellement
+    //         document.querySelectorAll('.cms-block.block-container, #container').forEach(c => {
+    //             c.classList.add('dropzone-active');
+    //         });
+    //     });
+    //
+    //     block.addEventListener("dragend", function () {
+    //         this.classList.remove("dragging");
+    //         document.querySelectorAll('.dropzone-active').forEach(c => {
+    //             c.classList.remove('dropzone-active');
+    //         });
+    //     });
+    //
+    //     // Gestion du dragover et drop pour le conteneur principal et les blocs conteneurs
+    //     block.addEventListener("dragover", handleDragOver);
+    //     block.addEventListener("drop", handleDrop);
+    // }
+    //
+    // // Gestionnaire de dragover générique
+    // function handleDragOver(e) {
+    //     e.preventDefault(); // Nécessaire pour permettre le drop
+    //     e.stopPropagation(); // Empêche l'événement de se propager au parent
+    //     if (this.classList.contains('cms-block') || this.id === 'container') { // Seulement sur les blocs ou le conteneur principal
+    //         this.classList.add('drag-over'); // Feedback visuel
+    //     }
+    // }
+    //
+    // // Gestionnaire de drop générique
+    // function handleDrop(e) {
+    //     e.preventDefault();
+    //     e.stopPropagation(); // Empêche l'événement de se propager
+    //
+    //     this.classList.remove('drag-over'); // Supprime le feedback visuel
+    //
+    //     const blockId = e.dataTransfer.getData("text/plain");
+    //     const draggingBlock = document.querySelector(`.cms-block[data-id="${blockId}"]`);
+    //
+    //     if (!draggingBlock || draggingBlock === this) return; // Ne rien faire si on glisse sur soi-même
+    //
+    //     let targetContainer = this; // Le conteneur où on veut lâcher
+    //
+    //     // Si on lâche sur un bloc normal, on veut le mettre à côté de lui, pas dedans
+    //     if (targetContainer.classList.contains('cms-block') && !targetContainer.classList.contains('block-container')) {
+    //         targetContainer = targetContainer.parentNode; // Le parent du bloc cible
+    //     }
+    //     // Si on lâche sur un conteneur qui est aussi un bloc, il devient la cible
+    //     else if (this.classList.contains('block-container')) {
+    //         targetContainer = this;
+    //     }
+    //
+    //
+    //     const afterElement = getDragAfterElement(targetContainer, e.clientY);
+    //
+    //     if (afterElement == null) {
+    //         targetContainer.appendChild(draggingBlock);
+    //     } else {
+    //         targetContainer.insertBefore(draggingBlock, afterElement);
+    //     }
+    //     saveBtn.disabled = false;
+    // }
+    //
+    //
+    // function getDragAfterElement(parentContainer, y) {
+    //     // Sélectionnez seulement les éléments qui sont des enfants directs et des blocs
+    //     let elements = [...parentContainer.querySelectorAll(":scope > .cms-block:not(.dragging)")];
+    //
+    //     return elements.reduce((closest, child) => {
+    //         const box = child.getBoundingClientRect();
+    //         const offset = y - box.top - box.height / 2;
+    //         if (offset < 0 && offset > closest.offset) {
+    //             return { offset: offset, element: child };
+    //         } else {
+    //             return closest;
+    //         }
+    //     }, { offset: Number.NEGATIVE_INFINITY }).element;
+    // }
 
 
     // --- Fonctions de sauvegarde ---
